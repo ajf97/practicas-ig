@@ -30,6 +30,12 @@ int UI_window_pos_x = 50, UI_window_pos_y = 50, UI_window_width = 450, UI_window
 _piramide piramide(0.85, 1.3);
 _cubo cubo(0.2);
 
+enum Visualizacion { PUNTOS, ARISTAS, RELLENO, AJEDREZ};
+enum Objeto { TETAEDRO, CUBO};
+
+Visualizacion opcion = PUNTOS;
+Objeto objeto = TETAEDRO;
+
 //**************************************************************************
 //
 //***************************************************************************
@@ -98,7 +104,36 @@ void draw_axis()
 
 void draw_objects()
 {
-    piramide.draw_aristas(1.0, 0.5, 0.0, 3);
+    switch (opcion)
+    {
+        case PUNTOS:
+            if (objeto == TETAEDRO)
+                piramide.draw_puntos(1.0, 0.5, 0.0, 3);
+            else
+                cubo.draw_puntos(1.0, 0.5, 0.0, 3);
+            break;
+
+        case ARISTAS:
+            if (objeto == TETAEDRO)
+                piramide.draw_aristas(1.0, 0.5, 0.0, 3);
+            else
+                cubo.draw_aristas(1.0, 0.5, 0.0, 3);
+            break;
+
+        case RELLENO:
+            if (objeto == TETAEDRO)
+                piramide.draw_solido(1.0, 0.5, 0.0);
+            else
+                cubo.draw_solido(1.0, 0.5, 0.0);
+            break;
+
+        case AJEDREZ:
+            if (objeto == TETAEDRO)
+                piramide.draw_solido_ajedrez(1.0, 0, 0, 0, 1.0, 0);
+            else
+                cubo.draw_solido_ajedrez(1.0, 0, 0, 0, 1.0, 0);
+            break;
+    }
 }
 
 //**************************************************************************
@@ -141,9 +176,36 @@ void change_window_size(int Ancho1, int Alto1)
 
 void normal_keys(unsigned char Tecla1, int x, int y)
 {
+    switch(toupper(Tecla1))
+    {
+        case 'Q':
+            exit(0);
+            break;
 
-    if (toupper(Tecla1) == 'Q')
-        exit(0);
+        case 'P':
+            opcion = PUNTOS;
+            break;
+
+        case 'L':
+            opcion = ARISTAS;
+            break;
+
+        case 'F':
+            opcion = RELLENO;
+            break;
+
+        case 'C':
+            opcion = AJEDREZ;
+            break;
+
+        case '1':
+            objeto = TETAEDRO;
+            break;
+
+        case '2':
+            objeto = CUBO;
+            break;
+    }
 }
 
 //***************************************************************************
