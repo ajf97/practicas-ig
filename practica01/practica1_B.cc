@@ -11,7 +11,7 @@
 #include "stdio.h"
 #include <GL/glut.h>
 #include <ctype.h>
-#include "objetos.h"
+#include "objetos_B.h"
 
 // tamaño de los ejes
 //const int AXIS_SIZE=5000;
@@ -29,12 +29,13 @@ int UI_window_pos_x = 50, UI_window_pos_y = 50, UI_window_width = 450, UI_window
 
 _piramide piramide(0.85, 1.3);
 _cubo cubo(0.2);
+_octaedro octaedro(0.85, 1.3);
 
 enum Visualizacion { PUNTOS, ARISTAS, RELLENO, AJEDREZ};
-enum Objeto { TETAEDRO, CUBO};
+enum Objeto { PIRAMIDE, CUBO, OCTAEDRO};
 
 Visualizacion opcion = PUNTOS;
-Objeto objeto = TETAEDRO;
+Objeto objeto = PIRAMIDE;
 
 //**************************************************************************
 //
@@ -107,31 +108,39 @@ void draw_objects()
     switch (opcion)
     {
         case PUNTOS:
-            if (objeto == TETAEDRO)
+            if (objeto == PIRAMIDE)
                 piramide.draw_puntos(1.0, 0.5, 0.0, 3);
-            else
+            else if (objeto == CUBO)
                 cubo.draw_puntos(1.0, 0.5, 0.0, 3);
+            else
+                octaedro.draw_puntos(1.0, 0.5, 0.0, 3);
             break;
 
         case ARISTAS:
-            if (objeto == TETAEDRO)
+            if (objeto == PIRAMIDE)
                 piramide.draw_aristas(1.0, 0.5, 0.0, 3);
-            else
+            else if (objeto == CUBO)
                 cubo.draw_aristas(1.0, 0.5, 0.0, 3);
+            else
+                octaedro.draw_aristas(1.0, 0.5, 0.0, 3);
             break;
 
         case RELLENO:
-            if (objeto == TETAEDRO)
+            if (objeto == PIRAMIDE)
                 piramide.draw_solido(1.0, 0.5, 0.0);
-            else
+            else if (objeto == CUBO)
                 cubo.draw_solido(1.0, 0.5, 0.0);
+            else
+                octaedro.draw_solido(1.0, 0.5, 0.0);
             break;
 
         case AJEDREZ:
-            if (objeto == TETAEDRO)
+            if (objeto == PIRAMIDE)
                 piramide.draw_solido_ajedrez(1.0, 0, 0, 0, 1.0, 0);
-            else
+            else if (objeto == CUBO)
                 cubo.draw_solido_ajedrez(1.0, 0, 0, 0, 1.0, 0);
+            else
+                octaedro.draw_solido_ajedrez(1.0, 0, 0, 0, 1.0, 0);
             break;
     }
 }
@@ -199,11 +208,15 @@ void normal_keys(unsigned char Tecla1, int x, int y)
             break;
 
         case '1':
-            objeto = TETAEDRO;
+            objeto = PIRAMIDE;
             break;
 
         case '2':
             objeto = CUBO;
+            break;
+
+        case '3':
+            objeto = OCTAEDRO;
             break;
     }
 }

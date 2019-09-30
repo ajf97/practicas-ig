@@ -1,6 +1,6 @@
 
-EJECUTABLE= practica1
-MODULOS=  $(EJECUTABLE).o objetos.o
+EJECUTABLE= practica1_B
+MODULOS=  $(EJECUTABLE).o objetos_B.o
 
 #  CFLAGS= Parametros para el compilador de C/C++
 CFLAGS=  -g -c -DXWINDOWS -I/usr/include -I
