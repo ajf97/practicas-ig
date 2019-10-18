@@ -20,11 +20,10 @@ _puntos3D::_puntos3D()
 
 void _puntos3D::draw_puntos(float r, float g, float b, int grosor)
 {
-int i;
 glPointSize(grosor);
 glColor3f(r,g,b);
 glBegin(GL_POINTS);
-for (i=0;i<vertices.size();i++){
+for (unsigned int i=0; i<vertices.size(); i++){
 	glVertex3fv((GLfloat *) &vertices[i]);
 	}
 glEnd();
@@ -46,12 +45,11 @@ _triangulos3D::_triangulos3D()
 
 void _triangulos3D::draw_aristas(float r, float g, float b, int grosor)
 {
-int i;
 glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 glLineWidth(grosor);
 glColor3f(r,g,b);
 glBegin(GL_TRIANGLES);
-for (i=0;i<caras.size();i++){
+for (unsigned int i=0; i<caras.size(); i++){
 	glVertex3fv((GLfloat *) &vertices[caras[i]._0]);
 	glVertex3fv((GLfloat *) &vertices[caras[i]._1]);
 	glVertex3fv((GLfloat *) &vertices[caras[i]._2]);
@@ -68,7 +66,7 @@ void _triangulos3D::draw_solido(float r, float g, float b)
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glColor3f(r, g, b);
 	glBegin(GL_TRIANGLES);
-	for (int i=0; i<caras.size(); i++)
+	for (unsigned int i=0; i<caras.size(); i++)
 	{
 		glVertex3fv((GLfloat *) &vertices[caras[i]._0]);
 		glVertex3fv((GLfloat *) &vertices[caras[i]._1]);
@@ -86,7 +84,7 @@ void _triangulos3D::draw_solido_ajedrez(float r1, float g1, float b1, float r2, 
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glColor3f(r1, g1, b1);
 	glBegin(GL_TRIANGLES);
-	for (int i=0; i<caras.size(); i++)
+	for (unsigned int i=0; i<caras.size(); i++)
 	{
 		if(i % 2 == 0)
 			glColor3f(r1, g1, b1);
@@ -217,6 +215,26 @@ printf("Number of vertices=%d\nNumber of faces=%d\n", n_ver, n_car);
 vertices.resize(n_ver);
 caras.resize(n_car);
 
+// Volcamos los datos en los vectores que usamos para dibujar las caras y vértices.
+
+int coordenada = 0;
+for(int i = 0; i < n_ver; i++){
+  vertices[i].x = ver_ply[coordenada];
+  vertices[i].y = ver_ply[coordenada+1];
+  vertices[i].z = ver_ply[coordenada+2];
+
+  coordenada = coordenada + 3;
+}
+
+
+coordenada = 0;
+for(int i = 0; i < n_car; i++){
+  caras[i]._0 = car_ply[coordenada];
+  caras[i]._1 = car_ply[coordenada+1];
+  caras[i]._2 = car_ply[coordenada+2];
+
+  coordenada = coordenada + 3;
+}
 
 return(0);
 }

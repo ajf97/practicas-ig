@@ -75,8 +75,7 @@ class _objeto_ply: public _triangulos3D
 {
 public:
    _objeto_ply();
-
-int   parametros(char *archivo);
+   int   parametros(char *archivo);
 };
 
 //************************************************************************

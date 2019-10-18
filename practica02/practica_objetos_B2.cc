@@ -114,8 +114,8 @@ void draw_objects()
 switch (t_objeto){
 	case CUBO: cubo.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	case PIRAMIDE: piramide.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
-        case OBJETO_PLY: ply.draw(modo,1.0,0.6,0.0,0.0,1.0,0.3,2);break;
-        case ROTACION: rotacion.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
+    case OBJETO_PLY: ply.draw(modo,1.0,0.6,0.0,0.0,1.0,0.3,2);break;
+    case ROTACION: rotacion.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	}
 
 }
@@ -251,6 +251,12 @@ glViewport(0,0,Window_width,Window_high);
 int main(int argc, char *argv[] )
 {
  
+// Comprobación del número de argumentos
+
+if (argc != 2) {
+	cout << "Uso: "  << "<Ejecutbale> <Nombre archivo PLY>\n";
+	exit(-1);
+}
 
 
 
