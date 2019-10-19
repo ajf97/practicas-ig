@@ -250,9 +250,8 @@ _rotacion::_rotacion()
 }
 
 
-void _rotacion::parametros(vector<_vertex3f> perfil, int num)
+void _rotacion::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
 {
-int i,j;
 _vertex3f vertice_aux;
 _vertex3i cara_aux;
 int num_aux;
@@ -260,20 +259,55 @@ int num_aux;
 // tratamiento de los vértice
 
 num_aux=perfil.size();
-vertices.resize(num_aux*num);
-for (j=0;j<num;j++)
-  {for (i=0;i<num_aux;i++)
+vertices.resize(num_aux*numero_rotaciones);
+for (int j=0;j<numero_rotaciones;j++)
+  {for (int i=0;i<num_aux;i++)
      {
-      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*num))+
-                    perfil[i].z*sin(2.0*M_PI*j/(1.0*num));
-      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*num))+
-                    perfil[i].z*cos(2.0*M_PI*j/(1.0*num));
+      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
       vertice_aux.y=perfil[i].y;
       vertices[i+j*num_aux]=vertice_aux;
      }
   }
 
-// tratamiento de las caras 
+// tratamiento de las caras
+
+for(int i = 0; i < numero_rotaciones - 1; i++){
+	for(unsigned int j = 1; j < perfil.size(); j++){
+		int actual = i*perfil.size() + j;
+		
+		cara_aux.x = actual;
+		cara_aux.y = actual - 1;
+		cara_aux.z = cara_aux.y + perfil.size();
+
+		caras.push_back(cara_aux);
+
+		cara_aux.y = (actual - 1) + perfil.size();
+		cara_aux.z = actual + perfil.size();
+
+		caras.push_back(cara_aux);
+	}
+}
+
+
+for (unsigned int i = 1; i < perfil.size(); i++){
+	int actual = (numero_rotaciones - 1)*perfil.size() + i;
+	int siguiente_perfil = i;
+
+	cara_aux.x = actual;
+	cara_aux.y = actual - 1;
+	cara_aux.z = siguiente_perfil - 1;
+
+	caras.push_back(cara_aux);
+
+	cara_aux.y = siguiente_perfil - 1;
+	cara_aux.z = siguiente_perfil;
+
+	caras.push_back(cara_aux);
+}
+
 
      
  // tapa inferior
