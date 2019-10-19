@@ -250,6 +250,12 @@ _rotacion::_rotacion()
 }
 
 
+_vertex3f _rotacion::proyeccion_y(const _vertex3f &vertice)
+{
+	return _vertex3f(0, vertice.y, 0);
+}
+
+
 void _rotacion::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
 {
 _vertex3f vertice_aux;
@@ -308,16 +314,33 @@ for (unsigned int i = 1; i < perfil.size(); i++){
 	caras.push_back(cara_aux);
 }
 
-
      
  // tapa inferior
 if (fabs(perfil[0].x)>0.0)
-  {
-  }
+{
+	vertices.push_back(proyeccion_y(vertices.front()));
+
+	for(int i = 0; i < numero_rotaciones - 1; i++) {
+		unsigned int tapa = vertices.size() - 1;
+		unsigned int actual = i * perfil.size();
+
+		cara_aux.x = tapa;
+		cara_aux.y = (actual - 1) + perfil.size();
+		cara_aux.z = actual;
+
+		caras.push_back(cara_aux);
+	}
+
+	cara_aux.x = vertices.size() - 1;
+	cara_aux.y = 0;
+	cara_aux.z = (numero_rotaciones-1) * perfil.size();
+
+	caras.push_back(cara_aux);
+}
  
  // tapa superior
  if (fabs(perfil[num_aux-1].x)>0.0)
-  {
-  }
+{
+}
 }
 

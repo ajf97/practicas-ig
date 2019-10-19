@@ -87,6 +87,7 @@ class _rotacion: public _triangulos3D
 public:
        _rotacion();
 void  parametros(vector<_vertex3f> perfil, int numero_rotaciones);
+_vertex3f proyeccion_y(const _vertex3f &vertice);
 
 vector<_vertex3f> perfil; 
 int num;
