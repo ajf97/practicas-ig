@@ -338,9 +338,27 @@ if (fabs(perfil[0].x)>0.0)
 	caras.push_back(cara_aux);
 }
  
- // tapa superior
- if (fabs(perfil[num_aux-1].x)>0.0)
+// tapa superior
+if (fabs(perfil[num_aux-1].x)>0.0)
 {
+	vertices.push_back(proyeccion_y(vertices[perfil.size() - 1]));
+
+	for(int i = 0; i < numero_rotaciones; i++){
+		unsigned int tapa = vertices.size() - 1;
+		unsigned int actual = i * perfil.size() + (perfil.size() - 1);
+
+		cara_aux.x = tapa;
+		cara_aux.y = actual;
+		cara_aux.z = (actual - 1) + perfil.size();
+
+		caras.push_back(cara_aux);
+	}
+
+	cara_aux.x = vertices.size() - 1;
+	cara_aux.y = perfil.size() - 1;
+	cara_aux.z = numero_rotaciones*(perfil.size() - 1);
+
+	caras.push_back(cara_aux);
 }
 }
 
