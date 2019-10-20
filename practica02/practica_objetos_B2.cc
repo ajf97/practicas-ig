@@ -268,8 +268,21 @@ if (argc != 2) {
 
 // perfil 
 
-vector<_vertex3f> perfilCilindro, perfilCono, perfilEsfera;
+vector<_vertex3f> perfilCilindro, perfilCono, perfilEsfera, perfilRotacion;
 _vertex3f aux;
+
+// Perfil rotación
+aux.x=0.0; aux.y=5.0; aux.z=0.0;
+perfilRotacion.push_back(aux);
+aux.x=4.0; aux.y=5.0; aux.z=0.0;
+perfilRotacion.push_back(aux);
+aux.x=3.0; aux.y=3.0; aux.z=0.0;
+perfilRotacion.push_back(aux);
+aux.x=3.0; aux.y=1.0; aux.z=0.0;
+perfilRotacion.push_back(aux);
+aux.x=4.0; aux.y=0.0; aux.z=0.0;
+perfilRotacion.push_back(aux);
+
 
 // Perfil cilindro
 aux.x=1.0; aux.y=-1.0; aux.z=0.0;
@@ -298,8 +311,8 @@ for(float i = 1; i >= 0; i-=0.001){
 	perfilEsfera.push_back(aux);
 }
 
-rotacion.parametros(perfilEsfera, 50);
 
+rotacion.parametros(perfilRotacion, 50);
 cono.parametros(perfilCono, 50);
 cilindro.parametros(perfilCilindro, 50);
 esfera.parametros(perfilEsfera, 50);
