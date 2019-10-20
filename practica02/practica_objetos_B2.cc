@@ -297,14 +297,14 @@ aux.x=0.0;aux.y=1.0;aux.z=0.0;
 perfilCono.push_back(aux);
 
 // Perfil esfera
-for(float i = 0.0; i < 1; i+=0.001){
+for(float i = 0.0; i < 1; i+=0.01){
 	aux.x = i;
 	aux.y = (-1)*sqrt(1-i*i);
 	aux.z = 0.0;
 	perfilEsfera.push_back(aux);
 }
 
-for(float i = 1; i >= 0; i-=0.001){
+for(float i = 1; i >= 0; i-=0.01){
 	aux.x = i;
 	aux.y = sqrt(1-i*i);
 	aux.z = 0.0;

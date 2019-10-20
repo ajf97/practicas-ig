@@ -279,39 +279,20 @@ for (int j=0;j<numero_rotaciones;j++)
   }
 
 // tratamiento de las caras
-
-for(int i = 0; i < numero_rotaciones - 1; i++){
-	for(unsigned int j = 1; j < perfil.size(); j++){
-		int actual = i*perfil.size() + j;
-		
-		cara_aux.x = actual;
-		cara_aux.y = actual - 1;
-		cara_aux.z = cara_aux.y + perfil.size();
+for(int i = 0; i < numero_rotaciones; i++){
+	for(int j = 0; j < num_aux - 1; j++){
+		cara_aux.x = j + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.y = j + 1 + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.z = j + 1 + i * num_aux;
 
 		caras.push_back(cara_aux);
 
-		cara_aux.y = (actual - 1) + perfil.size();
-		cara_aux.z = actual + perfil.size();
+		cara_aux.x = j + 1 + i * num_aux;
+		cara_aux.y = j + i * num_aux;
+		cara_aux.z = j + ((i + 1) % numero_rotaciones) * num_aux;
 
 		caras.push_back(cara_aux);
 	}
-}
-
-
-for (unsigned int i = 1; i < perfil.size(); i++){
-	int actual = (numero_rotaciones - 1)*perfil.size() + i;
-	int siguiente_perfil = i;
-
-	cara_aux.x = actual;
-	cara_aux.y = actual - 1;
-	cara_aux.z = siguiente_perfil - 1;
-
-	caras.push_back(cara_aux);
-
-	cara_aux.y = siguiente_perfil - 1;
-	cara_aux.z = siguiente_perfil;
-
-	caras.push_back(cara_aux);
 }
 
      
