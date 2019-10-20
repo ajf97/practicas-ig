@@ -67,6 +67,45 @@ public:
 	_piramide(float tam=0.5, float al=0.75);
 };
 
+
+//*************************************************************************
+// clase cono
+//*************************************************************************
+
+class _cono: public _triangulos3D
+{
+public:
+       _cono();
+void  parametros(vector<_vertex3f> perfil, int numero_rotaciones);
+_vertex3f proyeccion_y(const _vertex3f &vertice);
+
+};
+
+//*************************************************************************
+// clase cilindro
+//*************************************************************************
+
+class _cilindro: public _triangulos3D
+{
+public:
+       _cilindro();
+void  parametros(vector<_vertex3f> perfil, int numero_rotaciones);
+_vertex3f proyeccion_y(const _vertex3f &vertice);
+};
+
+
+//*************************************************************************
+// clase esfera
+//*************************************************************************
+
+class _esfera: public _triangulos3D
+{
+public:
+       _esfera();
+void  parametros(vector<_vertex3f> perfil, int numero_rotaciones);
+_vertex3f proyeccion_y(const _vertex3f &vertice);
+};
+
 //*************************************************************************
 // clase objeto ply
 //*************************************************************************

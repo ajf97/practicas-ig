@@ -30,9 +30,12 @@ int Window_x=50,Window_y=50,Window_width=450,Window_high=450;
 
 // objetos
 _cubo cubo;
+_cono cono;
+_cilindro cilindro;
+_esfera esfera;
 _piramide piramide(0.85,1.3);
 _objeto_ply  ply; 
-_rotacion rotacion, cono, cilindro, esfera; 
+_rotacion rotacion; 
 
 // _objeto_ply *ply1;
 

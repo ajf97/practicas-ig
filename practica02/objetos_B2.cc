@@ -325,3 +325,251 @@ if (fabs(perfil[num_aux-1].x)>0.0)
 }
 }
 
+
+//*************************************************************************
+// clase cono
+//*************************************************************************
+
+_cono::_cono() {
+
+}
+
+_vertex3f _cono::proyeccion_y(const _vertex3f &vertice)
+{
+	return _vertex3f(0, vertice.y, 0);
+}
+
+void _cono::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
+{
+_vertex3f vertice_aux;
+_vertex3i cara_aux;
+int num_aux;
+
+// tratamiento de los vértice
+
+num_aux=perfil.size();
+vertices.resize(num_aux*numero_rotaciones);
+for (int j=0;j<numero_rotaciones;j++)
+  {for (int i=0;i<num_aux;i++)
+     {
+      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.y=perfil[i].y;
+      vertices[i+j*num_aux]=vertice_aux;
+     }
+  }
+
+// tratamiento de las caras
+for(int i = 0; i < numero_rotaciones; i++){
+	for(int j = 0; j < num_aux - 1; j++){
+		cara_aux.x = j + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.y = j + 1 + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.z = j + 1 + i * num_aux;
+
+		caras.push_back(cara_aux);
+
+		cara_aux.x = j + 1 + i * num_aux;
+		cara_aux.y = j + i * num_aux;
+		cara_aux.z = j + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+
+     
+ // tapa inferior
+if (fabs(perfil[0].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(vertices.front()));
+
+	for(int i = 0; i < numero_rotaciones; i++) {
+		cara_aux.x = i*num_aux;
+		cara_aux.y = vertices.size() - 1;
+		cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+ 
+// tapa superior
+if (fabs(perfil[num_aux-1].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(perfil[num_aux - 1]));
+
+	for(int i = 0; i < numero_rotaciones; i++){
+		cara_aux.x = (num_aux - 1) + i * num_aux;
+		cara_aux.y = (vertices.size() - 1);
+		cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+}
+
+
+//*************************************************************************
+// clase cilindro
+//*************************************************************************
+
+_cilindro::_cilindro() {
+
+}
+
+_vertex3f _cilindro::proyeccion_y(const _vertex3f &vertice)
+{
+	return _vertex3f(0, vertice.y, 0);
+}
+
+
+void _cilindro::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
+{
+_vertex3f vertice_aux;
+_vertex3i cara_aux;
+int num_aux;
+
+// tratamiento de los vértice
+
+num_aux=perfil.size();
+vertices.resize(num_aux*numero_rotaciones);
+for (int j=0;j<numero_rotaciones;j++)
+  {for (int i=0;i<num_aux;i++)
+     {
+      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.y=perfil[i].y;
+      vertices[i+j*num_aux]=vertice_aux;
+     }
+  }
+
+// tratamiento de las caras
+for(int i = 0; i < numero_rotaciones; i++){
+	for(int j = 0; j < num_aux - 1; j++){
+		cara_aux.x = j + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.y = j + 1 + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.z = j + 1 + i * num_aux;
+
+		caras.push_back(cara_aux);
+
+		cara_aux.x = j + 1 + i * num_aux;
+		cara_aux.y = j + i * num_aux;
+		cara_aux.z = j + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+
+     
+ // tapa inferior
+if (fabs(perfil[0].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(vertices.front()));
+
+	for(int i = 0; i < numero_rotaciones; i++) {
+		cara_aux.x = i*num_aux;
+		cara_aux.y = vertices.size() - 1;
+		cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+ 
+// tapa superior
+if (fabs(perfil[num_aux-1].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(perfil[num_aux - 1]));
+
+	for(int i = 0; i < numero_rotaciones; i++){
+		cara_aux.x = (num_aux - 1) + i * num_aux;
+		cara_aux.y = (vertices.size() - 1);
+		cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+}
+
+//*************************************************************************
+// clase esfera
+//*************************************************************************
+
+_esfera::_esfera() {
+
+}
+
+_vertex3f _esfera::proyeccion_y(const _vertex3f &vertice)
+{
+	return _vertex3f(0, vertice.y, 0);
+}
+
+void _esfera::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
+{
+_vertex3f vertice_aux;
+_vertex3i cara_aux;
+int num_aux;
+
+// tratamiento de los vértice
+
+num_aux=perfil.size();
+vertices.resize(num_aux*numero_rotaciones);
+for (int j=0;j<numero_rotaciones;j++)
+  {for (int i=0;i<num_aux;i++)
+     {
+      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+      vertice_aux.y=perfil[i].y;
+      vertices[i+j*num_aux]=vertice_aux;
+     }
+  }
+
+// tratamiento de las caras
+for(int i = 0; i < numero_rotaciones; i++){
+	for(int j = 0; j < num_aux - 1; j++){
+		cara_aux.x = j + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.y = j + 1 + ((i + 1) % numero_rotaciones) * num_aux;
+		cara_aux.z = j + 1 + i * num_aux;
+
+		caras.push_back(cara_aux);
+
+		cara_aux.x = j + 1 + i * num_aux;
+		cara_aux.y = j + i * num_aux;
+		cara_aux.z = j + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+
+     
+ // tapa inferior
+if (fabs(perfil[0].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(vertices.front()));
+
+	for(int i = 0; i < numero_rotaciones; i++) {
+		cara_aux.x = i*num_aux;
+		cara_aux.y = vertices.size() - 1;
+		cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+ 
+// tapa superior
+if (fabs(perfil[num_aux-1].x)>0.0)
+{
+	vertices.push_back(proyeccion_y(perfil[num_aux - 1]));
+
+	for(int i = 0; i < numero_rotaciones; i++){
+		cara_aux.x = (num_aux - 1) + i * num_aux;
+		cara_aux.y = (vertices.size() - 1);
+		cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
+
+		caras.push_back(cara_aux);
+	}
+}
+}
