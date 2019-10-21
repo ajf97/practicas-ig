@@ -315,10 +315,10 @@ for(float i = 1; i >= 0; i-=0.01){
 }
 
 
-rotacion.parametros(perfilRotacion, 50);
-cono.parametros(perfilCono, 50);
-cilindro.parametros(perfilCilindro, 50);
-esfera.parametros(perfilEsfera, 50);
+rotacion.parametros(perfilRotacion, 20);
+cono.parametros(perfilCono, 20);
+cilindro.parametros(perfilCilindro, 20);
+esfera.parametros(perfilEsfera, 20);
 
 
 // se llama a la inicialización de glut
