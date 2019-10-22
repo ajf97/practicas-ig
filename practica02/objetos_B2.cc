@@ -417,13 +417,21 @@ _cilindro::_cilindro() {
 
 }
 
-_vertex3f _cilindro::proyeccion_y(const _vertex3f &vertice)
+_vertex3f _cilindro::proyeccion_eje(const _vertex3f &vertice, const int eje)
 {
-	return _vertex3f(0, vertice.y, 0);
+	if(eje == 0){
+		return _vertex3f(vertice.x, 0, 0);
+	}
+	else if (eje == 1){
+		return _vertex3f(0, vertice.y, 0);
+	}
+	else{
+		return _vertex3f(0, 0, vertice.z);
+	}
 }
 
 
-void _cilindro::parametros(vector<_vertex3f> perfil, int numero_rotaciones)
+void _cilindro::parametros(vector<_vertex3f> perfil, int numero_rotaciones, const int eje)
 {
 _vertex3f vertice_aux;
 _vertex3i cara_aux;
@@ -436,12 +444,33 @@ vertices.resize(num_aux*numero_rotaciones);
 for (int j=0;j<numero_rotaciones;j++)
   {for (int i=0;i<num_aux;i++)
      {
-      vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+	  if (eje == 1){
+		   vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
                     perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
-      vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
-                    perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
-      vertice_aux.y=perfil[i].y;
-      vertices[i+j*num_aux]=vertice_aux;
+			vertice_aux.z=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+							perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+			vertice_aux.y=perfil[i].y;
+			vertices[i+j*num_aux]=vertice_aux;
+	  }
+	  else if (eje == 0){
+		  // Cambiamos x por y para rotar el cilindro sobre el eje x 
+		   vertice_aux.y=perfil[i].y*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].z*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+			vertice_aux.z=-perfil[i].y*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+							perfil[i].z*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+			vertice_aux.x=perfil[i].x;
+			vertices[i+j*num_aux]=vertice_aux;
+
+	  }
+	  else {
+		 vertice_aux.x=perfil[i].x*cos(2.0*M_PI*j/(1.0*numero_rotaciones))+
+                    perfil[i].y*sin(2.0*M_PI*j/(1.0*numero_rotaciones));
+			vertice_aux.y=-perfil[i].x*sin(2.0*M_PI*j/(1.0*numero_rotaciones))+
+							perfil[i].y*cos(2.0*M_PI*j/(1.0*numero_rotaciones));
+			vertice_aux.z=perfil[i].z;
+			vertices[i+j*num_aux]=vertice_aux;
+	  }
+     
      }
   }
 
@@ -466,28 +495,28 @@ for(int i = 0; i < numero_rotaciones; i++){
  // tapa inferior
 if (fabs(perfil[0].x)>0.0)
 {
-	vertices.push_back(proyeccion_y(vertices.front()));
+	vertices.push_back(proyeccion_eje(vertices.front(), eje));
 
 	for(int i = 0; i < numero_rotaciones; i++) {
-		cara_aux.x = i*num_aux;
-		cara_aux.y = vertices.size() - 1;
-		cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
+			cara_aux.x = i*num_aux;
+			cara_aux.y = vertices.size() - 1;
+			cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
 
-		caras.push_back(cara_aux);
+			caras.push_back(cara_aux);
 	}
 }
  
 // tapa superior
 if (fabs(perfil[num_aux-1].x)>0.0)
 {
-	vertices.push_back(proyeccion_y(perfil[num_aux - 1]));
+	vertices.push_back(proyeccion_eje(perfil[num_aux - 1], eje));
 
 	for(int i = 0; i < numero_rotaciones; i++){
-		cara_aux.x = (num_aux - 1) + i * num_aux;
-		cara_aux.y = (vertices.size() - 1);
-		cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
+			cara_aux.x = (num_aux - 1) + i * num_aux;
+			cara_aux.y = (vertices.size() - 1);
+			cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
 
-		caras.push_back(cara_aux);
+			caras.push_back(cara_aux);
 	}
 }
 }

@@ -89,8 +89,8 @@ class _cilindro: public _triangulos3D
 {
 public:
        _cilindro();
-void  parametros(vector<_vertex3f> perfil, int numero_rotaciones);
-_vertex3f proyeccion_y(const _vertex3f &vertice);
+void  parametros(vector<_vertex3f> perfil, int numero_rotaciones, const int eje);
+_vertex3f proyeccion_eje(const _vertex3f &vertice, const int eje);
 };
 
 

@@ -12,7 +12,7 @@
 using namespace std;
 
 // tipos
-typedef enum{CUBO, PIRAMIDE, OBJETO_PLY, ROTACION, CONO, CILINDRO, ESFERA} _tipo_objeto;
+typedef enum{CUBO, PIRAMIDE, OBJETO_PLY, ROTACION, CONO, CILINDRO, ESFERA, CILINDRO_X, CILINDRO_Z} _tipo_objeto;
 _tipo_objeto t_objeto=CUBO;
 _modo   modo=POINTS;
 
@@ -31,7 +31,7 @@ int Window_x=50,Window_y=50,Window_width=450,Window_high=450;
 // objetos
 _cubo cubo;
 _cono cono;
-_cilindro cilindro;
+_cilindro cilindro, cilindro_x, cilindro_z;
 _esfera esfera;
 _piramide piramide(0.85,1.3);
 _objeto_ply  ply; 
@@ -121,6 +121,8 @@ switch (t_objeto){
     case ROTACION: rotacion.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	case CONO: cono.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	case CILINDRO: cilindro.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
+	case CILINDRO_X: cilindro_x.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
+	case CILINDRO_Z: cilindro_z.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	case ESFERA: esfera.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	}
 
@@ -186,6 +188,8 @@ switch (toupper(Tecla1)){
     case 'R':t_objeto=ROTACION;break;
 	case '5':t_objeto=CONO;break;
 	case '6':t_objeto=CILINDRO;break;
+	case 'X':t_objeto=CILINDRO_X; break;
+	case 'Z':t_objeto=CILINDRO_Z; break;
 	case '7':t_objeto=ESFERA;break;
 }
 glutPostRedisplay();
@@ -271,7 +275,7 @@ if (argc != 2) {
 
 // perfil 
 
-vector<_vertex3f> perfilCilindro, perfilCono, perfilEsfera, perfilRotacion;
+vector<_vertex3f> perfilCilindro, perfilCilindroX, perfilCilindroZ, perfilCono, perfilEsfera, perfilRotacion;
 _vertex3f aux;
 
 // Perfil rotación
@@ -292,6 +296,18 @@ aux.x=1.0; aux.y=-1.0; aux.z=0.0;
 perfilCilindro.push_back(aux);
 aux.x=1.0; aux.y=1.0; aux.z=0.0;
 perfilCilindro.push_back(aux);
+
+// Cilindro rotado sobre x
+aux.x = -1.0, aux.y = 1.0, aux.z = 0.0;
+perfilCilindroX.push_back(aux);
+aux.x = 1.0, aux.y = 1.0, aux.z = 0.0;
+perfilCilindroX.push_back(aux);
+
+// Cilindro rotado sobre z
+aux.x = 1.0, aux.y =0.0, aux.z= -1.0;
+perfilCilindroZ.push_back(aux);
+aux.x = 1.0, aux.y =0.0, aux.z= 1.0;
+perfilCilindroZ.push_back(aux);
 
 // Perfil cono
 aux.x=1.0;aux.y=-1.0;aux.z=0.0;
@@ -317,7 +333,9 @@ for(float i = 1; i >= 0; i-=0.01){
 
 rotacion.parametros(perfilRotacion, 20);
 cono.parametros(perfilCono, 20);
-cilindro.parametros(perfilCilindro, 20);
+cilindro.parametros(perfilCilindro, 20, 1);
+cilindro_x.parametros(perfilCilindroX, 20, 0);
+cilindro_z.parametros(perfilCilindroZ, 20, 2);
 esfera.parametros(perfilEsfera, 20);
 
 
