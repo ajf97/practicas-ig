@@ -8,7 +8,7 @@ Este repositorio contiene las prácticas de la asignatura Informática gráfica.
 * Creación del código que permite visualizar en modo relleno.
 * Creación del código que permite visualizar en modo ajedrez.
 
-### Práctica 2: Modelos poligonales.
+## Práctica 2: Modelos poligonales.
 
 El objetivo de la práctica es implementar objetos poligonales como el cono, cilindro o esfera. También se cargan objetos a través de un archivo PLY.
 Como parte extra se implementa el cilindro por revolución tomando como ejes de
