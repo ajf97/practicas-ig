@@ -62,6 +62,7 @@ glEnableClientState(GL_VERTEX_ARRAY);
 glVertexPointer(3,GL_FLOAT,0,&vertices[0]);
 glDrawElements(GL_TRIANGLES,caras.size()*3,GL_UNSIGNED_INT,&caras[0]);
 
+
 /*int i;
 glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 glLineWidth(grosor);
@@ -731,6 +732,8 @@ _espantapajaros::_espantapajaros(){
 
 
 void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	// derecha.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	cabeza.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 
 }
 
@@ -739,10 +742,73 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
  * Clase pierna
  * *******************************************/
 
-_pierna::_pierna(){
+// _pierna::_pierna(){
+// }
 
+// void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+
+// 	vector<_vertex3f> perfilPierna, perfilPie;
+// 	_vertex3f vertice;
+
+// 	// Pierna derecha
+
+// 	vertice.x=1.0; vertice.y=-1.0; vertice.z=0.0;
+// 	perfilPierna.push_back(vertice);
+// 	vertice.x=1.0; vertice.y=1.0; vertice.z=0.0;
+// 	perfilPierna.push_back(vertice);
+
+// 	pierna.parametros(perfilPierna, 20, 1);
+// 	glPushMatrix();
+// 	glScalef(0.1,0.55,0.1);
+// 	pierna.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+// }
+
+/*********************************************
+ * Clase cabeza
+ * *******************************************/
+
+_cabeza::_cabeza(){
+	// Creamos el perfil de los objetos de la cabeza
+
+	vector<_vertex3f> perfilCabeza, perfilSombrero;
+	_vertex3f vertice;
+
+	// Creación del perfil de la esfera 
+
+	for(float i = 0.0; i < 1; i+=0.01){
+		vertice.x = i;
+		vertice.y = (-1)*sqrt(1-i*i);
+		vertice.z = 0.0;
+		perfilCabeza.push_back(vertice);
+	}
+
+	for(float i = 1; i >= 0; i-=0.01){
+		vertice.x = i;
+		vertice.y = sqrt(1-i*i);
+		vertice.z = 0.0;
+		perfilCabeza.push_back(vertice);
+	}
+
+	cabeza.parametros(perfilCabeza, 20);
+
+	// Creación del perfil cono
+
+	vertice.x=1.0;vertice.y=-1.0;vertice.z=0.0;
+	perfilSombrero.push_back(vertice);
+	vertice.x=0.0;vertice.y=1.0;vertice.z=0.0;
+	perfilSombrero.push_back(vertice);
+
+	sombrero.parametros(perfilSombrero, 20);
 }
 
-void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
-	
+void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	//Dibujar cabeza
+	glScalef(0.3, 0.3, 0.3);
+	glTranslatef(0,8.0,0);
+	cabeza.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+
+	//Dibujar sombrero
+	glScalef(0.8,0.8,0.8);
+	glTranslatef(0,1.5,0);
+	sombrero.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
 }
