@@ -710,3 +710,39 @@ if (fabs(perfil[num_aux-1].x)>0.0)
 	}
 }
 }
+
+
+//////////////////////////// Implementación práctica 3
+
+/********************************************
+ * Clase espantapájaros
+ * *****************************************/
+
+_espantapajaros::_espantapajaros(){
+	giro_pie_min=0.0;
+	giro_pie_max=0.0;
+	giro_mano_min=0.0;
+	giro_mano_max=0.0;
+	giro_pierna_min=0.0;
+	giro_pierna_max=0.0;
+	giro_brazo_min=0.0;
+	giro_brazo_max=0.0;
+}
+
+
+void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+
+}
+
+
+/*********************************************
+ * Clase pierna
+ * *******************************************/
+
+_pierna::_pierna(){
+
+}
+
+void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	
+}
