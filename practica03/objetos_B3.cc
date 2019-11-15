@@ -761,14 +761,14 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	glPushMatrix();
 	glTranslatef(-0.65,-0.2,0.0);
 	glRotatef(-45.0,0,0,1);
-	derecha.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor);
+	derecha.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 0);
 	glPopMatrix();
 
 	// Pierna izquierda
 	glPushMatrix();
 	glTranslatef(0.65,-0.2,0.0);
 	glRotatef(45.0,0,0,1);
-	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor);
+	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 1);
 	glPopMatrix();
 
 	// Brazo derecho
@@ -804,13 +804,26 @@ _pierna::_pierna(){
 	perfilPierna.push_back(vertice);
 
 	pierna.parametros(perfilPierna, 20, 1);
+	pie.parametros(perfilPierna, 20, 1);
 }
 
-void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, int orientacion){
 	glPushMatrix();
 	glScalef(0.27,1.0,0.27);
 	pierna.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(0.08,1.0,0.08);
+	if(orientacion == 0){
+		glTranslatef(0.0,-1.0,0.0);
+	}
+	if (orientacion == 1) {
+		glTranslatef(0.0,-1.0,0.0);
+	}
+	pie.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
+
 }
 
 /*********************************************
