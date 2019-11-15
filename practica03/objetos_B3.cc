@@ -840,6 +840,8 @@ _cabeza::_cabeza(){
 	}
 
 	cabeza.parametros(perfilCabeza, 20);
+	ojo_derecho.parametros(perfilCabeza, 20);
+	ojo_izquierdo.parametros(perfilCabeza, 20);
 
 	// Creación del perfil cono
 
@@ -871,7 +873,22 @@ void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2,
 	nariz.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
 	glPopMatrix();
 
-	//Dibujar ojo
+	//Dibujar ojos
+	glPushMatrix();
+	glScalef(0.2,0.2,0.2);
+	glTranslatef(-2.0,-4,4.7);
+	glRotatef(90,1,0,0);
+	ojo_derecho.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(0.2,0.2,0.2);
+	glTranslatef(2.0,-4,4.7);
+	glRotatef(90,1,0,0);
+	ojo_izquierdo.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	glPopMatrix();
+
+
 }
 
 /*********************************************
