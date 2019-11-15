@@ -849,6 +849,7 @@ _cabeza::_cabeza(){
 	perfilSombrero.push_back(vertice);
 
 	sombrero.parametros(perfilSombrero, 20);
+	nariz.parametros(perfilSombrero,20);
 }
 
 void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
@@ -861,6 +862,16 @@ void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2,
 	glScalef(0.8,0.8,0.8);
 	glTranslatef(0,1.5,0);
 	sombrero.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+
+	//Dibujar nariz
+	glPushMatrix();
+	glScalef(0.3,0.3,0.3);
+	glTranslatef(0.0,-4,4.7);
+	glRotatef(90,1,0,0);
+	nariz.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	glPopMatrix();
+
+	//Dibujar ojo
 }
 
 /*********************************************
