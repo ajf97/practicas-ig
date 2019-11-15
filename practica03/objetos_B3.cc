@@ -775,14 +775,14 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	glPushMatrix();
 	glTranslatef(-0.5,1.5,0.0);
 	glRotatef(90.0,0,0,1);
-	derecho.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	derecho.draw(modo, r1, g1, b1, r2, g2, b2, grosor, 0);
 	glPopMatrix();
 
 	// Brazo izquierdo
 	glPushMatrix();
 	glTranslatef(0.5,1.5,0.0);
 	glRotatef(90.0,0,0,1);
-	izquierdo.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	izquierdo.draw(modo, r1, g1, b1, r2, g2, b2, grosor, 1);
 	glPopMatrix();
 
 }
@@ -907,12 +907,29 @@ _brazo::_brazo(){
 	perfilBrazo.push_back(vertice);
 
 	brazo.parametros(perfilBrazo, 20, 1);
+	mano.parametros(perfilBrazo, 20, 1);
 }
 
 
-void _brazo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+void _brazo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, int orientacion){
+	
+	// Brazo
+
 	glPushMatrix();
 	glScalef(0.2,0.5,0.2);
 	brazo.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
+
+	// Mano
+
+	glPushMatrix();
+	glScalef(0.08,0.5,0.08);
+	if(orientacion == 0){ //Mano derecha
+		glTranslatef(0,1,0);
+	}
+	if(orientacion == 1){
+		glTranslatef(0,-1,0); //Mano izquierda
+	}
+	mano.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 	glPopMatrix();
 }

@@ -230,10 +230,10 @@ class _brazo: public _triangulos3D
 {
        public:
        _brazo();
-       void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+       void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor, int orientacion);
 
        protected:
-       _cilindro brazo;
+       _cilindro brazo, mano;
 };
 
 class _espantapajaros: public _triangulos3D
