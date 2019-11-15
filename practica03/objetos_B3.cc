@@ -728,13 +728,48 @@ _espantapajaros::_espantapajaros(){
 	giro_pierna_max=0.0;
 	giro_brazo_min=0.0;
 	giro_brazo_max=0.0;
+
+	// Crear perfil del tronco
+
+	vector<_vertex3f> perfilTronco;
+	_vertex3f vertice;
+
+	vertice.x=1.0; vertice.y=-1.0; vertice.z=0.0;
+	perfilTronco.push_back(vertice);
+	vertice.x=1.0; vertice.y=1.0; vertice.z=0.0;
+	perfilTronco.push_back(vertice);
+
+	tronco.parametros(perfilTronco, 20, 1);
+
 }
 
 
 void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
-	// derecha.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	// Cabeza
+	glPushMatrix();
 	cabeza.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
 
+	// Tronco
+	glPushMatrix();
+	glScalef(0.27, 1.25, 0.27);
+	glTranslatef(0.0, 1.0, 0.0);
+	tronco.draw(modo, 1.0, 0.5, 0.0, 0.1, 0.0, 0.0, grosor);
+	glPopMatrix();
+	
+	// Pierna derecha
+	glPushMatrix();
+	glTranslatef(-0.65,-0.2,0.0);
+	glRotatef(-45.0,0,0,1);
+	derecha.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor);
+	glPopMatrix();
+
+	// Pierna izquierda
+	glPushMatrix();
+	glTranslatef(0.65,-0.2,0.0);
+	glRotatef(45.0,0,0,1);
+	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor);
+	glPopMatrix();
 }
 
 
@@ -742,26 +777,26 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
  * Clase pierna
  * *******************************************/
 
-// _pierna::_pierna(){
-// }
+_pierna::_pierna(){
+	vector<_vertex3f> perfilPierna, perfilPie;
+	_vertex3f vertice;
 
-// void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	// Pierna derecha
 
-// 	vector<_vertex3f> perfilPierna, perfilPie;
-// 	_vertex3f vertice;
+	vertice.x=1.0; vertice.y=-1.0; vertice.z=0.0;
+	perfilPierna.push_back(vertice);
+	vertice.x=1.0; vertice.y=1.0; vertice.z=0.0;
+	perfilPierna.push_back(vertice);
 
-// 	// Pierna derecha
+	pierna.parametros(perfilPierna, 20, 1);
+}
 
-// 	vertice.x=1.0; vertice.y=-1.0; vertice.z=0.0;
-// 	perfilPierna.push_back(vertice);
-// 	vertice.x=1.0; vertice.y=1.0; vertice.z=0.0;
-// 	perfilPierna.push_back(vertice);
-
-// 	pierna.parametros(perfilPierna, 20, 1);
-// 	glPushMatrix();
-// 	glScalef(0.1,0.55,0.1);
-// 	pierna.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
-// }
+void _pierna::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	glPushMatrix();
+	glScalef(0.27,1.0,0.27);
+	pierna.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
+}
 
 /*********************************************
  * Clase cabeza

@@ -202,16 +202,16 @@ _vertex3f proyeccion_y(const _vertex3f &vertice);
 };
 
 //***************************************************************************
-// class _pierna: public _triangulos3D 
-// {
-//        public:
-//        _pierna();
-//        void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+class _pierna: public _triangulos3D 
+{
+       public:
+       _pierna();
+       void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
 
-//        protected:
-//        _cilindro pierna;
-//        _cilindro pie;
-// };
+       protected:
+       _cilindro pierna;
+       _cilindro pie;
+};
 
 
 class _cabeza: public _triangulos3D 
@@ -237,6 +237,7 @@ class _espantapajaros: public _triangulos3D
        float giro_brazo_min, giro_brazo_max;
 
        protected:
-       //_pierna derecha;
+       _pierna derecha, izquierda;
        _cabeza cabeza;
+       _cilindro tronco;
 };
