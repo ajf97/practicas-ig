@@ -770,6 +770,21 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	glRotatef(45.0,0,0,1);
 	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor);
 	glPopMatrix();
+
+	// Brazo derecho
+	glPushMatrix();
+	glTranslatef(-0.5,1.5,0.0);
+	glRotatef(90.0,0,0,1);
+	derecho.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
+
+	// Brazo izquierdo
+	glPushMatrix();
+	glTranslatef(0.5,1.5,0.0);
+	glRotatef(90.0,0,0,1);
+	izquierdo.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
+
 }
 
 
@@ -846,4 +861,30 @@ void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2,
 	glScalef(0.8,0.8,0.8);
 	glTranslatef(0,1.5,0);
 	sombrero.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+}
+
+/*********************************************
+ * Clase brazo
+ * *******************************************/
+
+_brazo::_brazo(){
+	vector<_vertex3f> perfilBrazo;
+	_vertex3f vertice;
+
+	// Brazo
+
+	vertice.x=1.0; vertice.y=-1.0; vertice.z=0.0;
+	perfilBrazo.push_back(vertice);
+	vertice.x=1.0; vertice.y=1.0; vertice.z=0.0;
+	perfilBrazo.push_back(vertice);
+
+	brazo.parametros(perfilBrazo, 20, 1);
+}
+
+
+void _brazo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	glPushMatrix();
+	glScalef(0.2,0.5,0.2);
+	brazo.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
+	glPopMatrix();
 }

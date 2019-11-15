@@ -225,6 +225,17 @@ class _cabeza: public _triangulos3D
        _esfera cabeza;
 };
 
+
+class _brazo: public _triangulos3D 
+{
+       public:
+       _brazo();
+       void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+
+       protected:
+       _cilindro brazo;
+};
+
 class _espantapajaros: public _triangulos3D
 {
        public:
@@ -238,6 +249,7 @@ class _espantapajaros: public _triangulos3D
 
        protected:
        _pierna derecha, izquierda;
+       _brazo derecho, izquierdo;
        _cabeza cabeza;
        _cilindro tronco;
 };
