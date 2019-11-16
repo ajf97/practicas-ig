@@ -207,14 +207,27 @@ switch (Tecla1){
 	case GLUT_KEY_DOWN:Observer_angle_x++;break;
 	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
 	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
-        case GLUT_KEY_F1:tanque.giro_tubo+=1;
-                         if (tanque.giro_tubo>tanque.giro_tubo_max) tanque.giro_tubo=tanque.giro_tubo_max;
+        case GLUT_KEY_F1:espanta.giro_cabeza+=1;
+                         if (espanta.giro_cabeza>espanta.giro_cabeza_max) espanta.giro_cabeza=espanta.giro_cabeza_max;
                          break;
-        case GLUT_KEY_F2:tanque.giro_tubo-=1;
-                         if (tanque.giro_tubo<tanque.giro_tubo_min) tanque.giro_tubo=tanque.giro_tubo_min;
-                         break;break;
-        case GLUT_KEY_F3:tanque.giro_torreta+=5;break;
-        case GLUT_KEY_F4:tanque.giro_torreta-=5;break;
+        case GLUT_KEY_F2:espanta.giro_cabeza-=1;
+                         if (espanta.giro_cabeza<espanta.giro_cabeza_min) espanta.giro_cabeza=espanta.giro_cabeza_min;
+                         break;
+        case GLUT_KEY_F3:espanta.giro_brazos+=1;
+                         if (espanta.giro_brazos>espanta.giro_brazo_max) espanta.giro_brazos=espanta.giro_brazo_max;
+                         break;
+        case GLUT_KEY_F4:espanta.giro_brazos-=1;
+                         if (espanta.giro_brazos<espanta.giro_brazo_min) espanta.giro_brazos=espanta.giro_brazo_min;
+                         break;
+        case GLUT_KEY_F5:espanta.giro_piernas+=1;
+                         if (espanta.giro_piernas>espanta.giro_pierna_max) espanta.giro_piernas=espanta.giro_pierna_max;
+                         break;
+        case GLUT_KEY_F6:espanta.giro_piernas-=1;
+                         if (espanta.giro_piernas<espanta.giro_pierna_min) espanta.giro_piernas=espanta.giro_pierna_min;
+                         break;
+        case GLUT_KEY_F7:espanta.mover+=1; break;
+        case GLUT_KEY_F8:espanta.mover-=1; break;
+        
 	}
 glutPostRedisplay();
 }

@@ -720,14 +720,17 @@ if (fabs(perfil[num_aux-1].x)>0.0)
  * *****************************************/
 
 _espantapajaros::_espantapajaros(){
-	giro_pie_min=0.0;
-	giro_pie_max=0.0;
-	giro_mano_min=0.0;
-	giro_mano_max=0.0;
-	giro_pierna_min=0.0;
-	giro_pierna_max=0.0;
-	giro_brazo_min=0.0;
-	giro_brazo_max=0.0;
+	giro_cabeza = 0.0;
+	giro_brazos = 0.0;
+	giro_piernas = 0.0;
+	mover = 0.0;
+	
+	giro_pierna_min=-45.0;
+	giro_pierna_max=45.0;
+	giro_brazo_min=-10.0;
+	giro_brazo_max=10.0;
+	giro_cabeza_min=-90.0;
+	giro_cabeza_max=90.0;
 
 	// Crear perfil del tronco
 
@@ -745,8 +748,11 @@ _espantapajaros::_espantapajaros(){
 
 
 void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor){
+	
+	glTranslatef(0.0,0.0,mover);
 	// Cabeza
 	glPushMatrix();
+	glRotatef(giro_cabeza,0,1,0);
 	cabeza.draw(modo, r1, g1, b1, r2, g2, b2, grosor);
 	glPopMatrix();
 
@@ -759,6 +765,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	
 	// Pierna derecha
 	glPushMatrix();
+	glRotatef(giro_piernas,0,1,0);
 	glTranslatef(-0.65,-0.2,0.0);
 	glRotatef(-45.0,0,0,1);
 	derecha.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 0);
@@ -766,6 +773,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 
 	// Pierna izquierda
 	glPushMatrix();
+	glRotatef(giro_piernas,0,1,0);
 	glTranslatef(0.65,-0.2,0.0);
 	glRotatef(45.0,0,0,1);
 	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 1);
@@ -773,6 +781,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 
 	// Brazo derecho
 	glPushMatrix();
+	glRotatef(giro_brazos,0,0,1);
 	glTranslatef(-0.5,1.5,0.0);
 	glRotatef(90.0,0,0,1);
 	derecho.draw(modo, r1, g1, b1, r2, g2, b2, grosor, 0);
@@ -780,6 +789,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 
 	// Brazo izquierdo
 	glPushMatrix();
+	glRotatef(-giro_brazos,0,0,1);
 	glTranslatef(0.5,1.5,0.0);
 	glRotatef(90.0,0,0,1);
 	izquierdo.draw(modo, r1, g1, b1, r2, g2, b2, grosor, 1);
