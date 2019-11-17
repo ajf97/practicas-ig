@@ -724,6 +724,9 @@ _espantapajaros::_espantapajaros(){
 	giro_brazos = 0.0;
 	giro_piernas = 0.0;
 	mover = 0.0;
+	animar = false;
+	animar_brazos = true;
+	animar_piernas = true;
 	
 	giro_pierna_min=-45.0;
 	giro_pierna_max=45.0;
@@ -768,7 +771,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	glRotatef(giro_piernas,0,1,0);
 	glTranslatef(-0.65,-0.2,0.0);
 	glRotatef(-45.0,0,0,1);
-	derecha.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 0);
+	derecha.draw(modo, 0.0, 0.0, 1.0, 0.65, 0.23, 1.0, grosor, 0);
 	glPopMatrix();
 
 	// Pierna izquierda
@@ -776,7 +779,7 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	glRotatef(giro_piernas,0,1,0);
 	glTranslatef(0.65,-0.2,0.0);
 	glRotatef(45.0,0,0,1);
-	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, grosor, 1);
+	izquierda.draw(modo, 0.0, 0.0, 1.0, 0.65, 0.23, 1.0, grosor, 1);
 	glPopMatrix();
 
 	// Brazo derecho
@@ -795,6 +798,47 @@ void _espantapajaros::draw(_modo modo, float r1, float g1, float b1, float r2, f
 	izquierdo.draw(modo, r1, g1, b1, r2, g2, b2, grosor, 1);
 	glPopMatrix();
 
+}
+
+
+void _espantapajaros::animacion() {
+	if(animar){
+
+		giro_cabeza+=1;
+
+		if(animar_piernas){
+			giro_piernas+=1;
+			if(giro_piernas > giro_pierna_max){
+				giro_piernas = giro_pierna_max;
+				animar_piernas = false;
+			}
+		}
+		if(!animar_piernas){
+			giro_piernas-=1;
+			if(giro_piernas < giro_pierna_min){
+				animar_piernas = true;
+				giro_piernas = giro_pierna_min;
+			}
+		}
+
+
+		if(animar_brazos){
+			giro_brazos+=1;
+			if(giro_brazos > giro_brazo_max){
+				giro_brazos = giro_brazo_max;
+				animar_brazos = false;
+			}
+		}
+		if(!animar_brazos){
+			giro_brazos-=1;
+			if(giro_brazos < giro_brazo_min){
+				animar_brazos = true;
+				giro_brazos = giro_brazo_min;
+			}
+		}
+
+		glutPostRedisplay();
+	}
 }
 
 
@@ -886,14 +930,14 @@ void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2,
 	//Dibujar sombrero
 	glScalef(0.8,0.8,0.8);
 	glTranslatef(0,1.5,0);
-	sombrero.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	sombrero.draw(modo, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, grosor);
 
 	//Dibujar nariz
 	glPushMatrix();
 	glScalef(0.3,0.3,0.3);
 	glTranslatef(0.0,-4,4.7);
 	glRotatef(90,1,0,0);
-	nariz.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	nariz.draw(modo, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, grosor);
 	glPopMatrix();
 
 	//Dibujar ojos
@@ -901,14 +945,14 @@ void _cabeza::draw(_modo modo, float r1, float g1, float b1, float r2, float g2,
 	glScalef(0.2,0.2,0.2);
 	glTranslatef(-2.0,-4,4.7);
 	glRotatef(90,1,0,0);
-	ojo_derecho.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	ojo_derecho.draw(modo, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, grosor);
 	glPopMatrix();
 
 	glPushMatrix();
 	glScalef(0.2,0.2,0.2);
 	glTranslatef(2.0,-4,4.7);
 	glRotatef(90,1,0,0);
-	ojo_izquierdo.draw(modo, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, grosor);
+	ojo_izquierdo.draw(modo, 1.0, 0.0, 0.0, 0.1, 0.0, 0.0, grosor);
 	glPopMatrix();
 
 

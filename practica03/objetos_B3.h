@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include "vertex.h"
 #include <stdlib.h>
+#include <GL/glut.h>
 #include "file_ply_stl.hpp"
 
 using namespace std;
@@ -241,11 +242,14 @@ class _espantapajaros: public _triangulos3D
        public:
        _espantapajaros();
        void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b2, float grosor);
+       void animacion();
 
        float giro_cabeza;
        float giro_brazos;
        float giro_piernas;
        float mover;
+       bool animar;
+       bool animar_brazos, animar_piernas;
 
        float giro_pierna_min, giro_pierna_max;
        float giro_brazo_min, giro_brazo_max;

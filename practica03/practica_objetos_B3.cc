@@ -26,7 +26,7 @@ GLfloat Size_x,Size_y,Front_plane,Back_plane;
 
 // variables que determninan la posicion y tamaño de la ventana X
 int Window_x=50,Window_y=50,Window_width=450,Window_high=450;
-
+bool subiendo = true;
 
 // objetos
 _cubo cubo;
@@ -40,7 +40,7 @@ _espantapajaros espanta;
 
 
 //**************************************************************************
-//
+// 
 //***************************************************************************
 
 void clean_window()
@@ -131,6 +131,7 @@ switch (t_objeto){
 void draw(void)
 {
 
+espanta.animacion();
 clean_window();
 change_observer();
 draw_axis();
@@ -183,6 +184,7 @@ switch (toupper(Tecla1)){
         case 'R':t_objeto=ROTACION;break;
         case 'A':t_objeto=ARTICULADO;break;
         case 'E':t_objeto=ESPANTAPAJAROS;break;
+        case 'M':espanta.animar = !espanta.animar;break;
 	}
 glutPostRedisplay();
 }
@@ -344,6 +346,8 @@ glutReshapeFunc(change_window_size);
 glutKeyboardFunc(normal_key);
 // asignación de la funcion llamada "tecla_Especial" al evento correspondiente
 glutSpecialFunc(special_key);
+
+
 
 // funcion de inicialización
 initialize();
