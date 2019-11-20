@@ -1015,8 +1015,32 @@ void _triangulos3D::draw_iluminacion_suave() {
 
 void _triangulos3D::calcular_normales_vertices() {
 
+	if(normales_caras.empty())
+		calcular_normales_caras();
+
+	normales_caras.resize(vertices.size());
+
+	for(unsigned int i = 0; i < caras.size(); i++){
+		int a = caras[i]._0;
+		int b = caras[i]._1;
+		int c = caras[i]._2;
+
+		normales_vertices[a] += normales_caras[i];
+		normales_vertices[b] += normales_caras[i];
+		normales_vertices[c] += normales_caras[i];
+	}
 }
 
 void _triangulos3D::calcular_normales_caras() {
-	
+
+	for(int i=0; i < caras.size(); i++){
+		_vertex3f p = vertices[caras[i]._0];
+		_vertex3f q = vertices[caras[i]._1];
+		_vertex3f r = vertices[caras[i]._2];
+
+		_vertex3f a = q - p;
+		_vertex3f b = r - p;
+
+		normales_caras.push_back(a.cross_product(b).normalize());
+	}
 }
