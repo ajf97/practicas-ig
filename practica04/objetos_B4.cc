@@ -44,6 +44,19 @@ glEnd();*/
 
 _triangulos3D::_triangulos3D()
 {
+  b_normales_caras=false;
+  b_normales_vertices=false;
+
+  for(int i=0; i<3; i++){
+    ambiente_difusa[i]=0.7;
+    especular[i]=0.7;
+  }
+
+  ambiente_difusa[3]=1.0;
+  especular[3]=1.0;
+
+
+  brillo=100;
 }
 
 
@@ -125,6 +138,8 @@ switch (modo){
 	case EDGES:draw_aristas(r1, g1, b1, grosor);break;
 	case SOLID_CHESS:draw_solido_ajedrez(r1, g1, b1, r2, g2, b2);break;
 	case SOLID:draw_solido(r1, g1, b1);break;
+	case SOLID_ILLUMINATED_FLAT:draw_iluminacion_plana();break;
+	case SOLID_ILLUMINATED_GOURAUD:draw_iluminacion_suave();break;
 	}
 }
 
@@ -1006,41 +1021,105 @@ void _brazo::draw(_modo modo, float r1, float g1, float b1, float r2, float g2, 
  *******************************************************************/
 
 void _triangulos3D::draw_iluminacion_plana() {
+	if(!b_normales_caras)
+		calcular_normales_caras();
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
+
+	glShadeModel(GL_FLAT);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT2);
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, (GLfloat *) &ambiente_difusa);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, (GLfloat *) &especular);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, brillo);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glBegin(GL_TRIANGLES);
+	for (size_t i = 0; i < caras.size(); i++) {
+		glNormal3fv((GLfloat*) &normales_caras[i]);
+		glVertex3fv((GLfloat*) &vertices[caras[i]._0]);
+		glVertex3fv((GLfloat*) &vertices[caras[i]._1]);
+		glVertex3fv((GLfloat*) &vertices[caras[i]._2]);
+	}
+	glEnd();
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_NORMALIZE);
 
 }
 
 void _triangulos3D::draw_iluminacion_suave() {
+	if (!b_normales_vertices) calcular_normales_vertices();
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
+
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT3);
+
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE,(GLfloat *) &ambiente_difusa);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR,(GLfloat *) &especular);
+	glMaterialf(GL_FRONT_AND_BACK,GL_SHININESS,brillo);
+
+	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+	glBegin(GL_TRIANGLES);
+	for (size_t i = 0; i < caras.size(); i++){
+		glNormal3fv((GLfloat *) &normales_vertices[caras[i]._0]);
+		glVertex3fv((GLfloat *) &vertices[caras[i]._0]);
+		glNormal3fv((GLfloat *) &normales_vertices[caras[i]._1]);
+		glVertex3fv((GLfloat *) &vertices[caras[i]._1]);
+		glNormal3fv((GLfloat *) &normales_vertices[caras[i]._2]);
+		glVertex3fv((GLfloat *) &vertices[caras[i]._2]);
+	}
+	glEnd();
+
+	glDisable(GL_LIGHTING);
+	glDisable(GL_NORMALIZE);
 
 }
 
 void _triangulos3D::calcular_normales_vertices() {
 
-	if(normales_caras.empty())
+	if (!b_normales_caras) {
 		calcular_normales_caras();
-
-	normales_caras.resize(vertices.size());
-
-	for(unsigned int i = 0; i < caras.size(); i++){
-		int a = caras[i]._0;
-		int b = caras[i]._1;
-		int c = caras[i]._2;
-
-		normales_vertices[a] += normales_caras[i];
-		normales_vertices[b] += normales_caras[i];
-		normales_vertices[c] += normales_caras[i];
 	}
+
+	normales_vertices.resize(vertices.size());
+
+	for (int i = 0; i < vertices.size(); i++){
+	normales_vertices[i].x=0.0;
+	normales_vertices[i].y=0.0;
+	normales_vertices[i].z=0.0;
+	}
+
+	for (int i = 0; i < caras.size(); i++){
+	normales_vertices[caras[i]._0]+=normales_caras[i];
+	normales_vertices[caras[i]._1]+=normales_caras[i];
+	normales_vertices[caras[i]._2]+=normales_caras[i];
+	}
+
+	for (int i = 0; i < vertices.size(); i++)
+		normales_vertices[i].normalize();
+
+	b_normales_vertices=true;
 }
 
 void _triangulos3D::calcular_normales_caras() {
+  normales_caras.resize(caras.size());
 
-	for(int i=0; i < caras.size(); i++){
-		_vertex3f p = vertices[caras[i]._0];
-		_vertex3f q = vertices[caras[i]._1];
-		_vertex3f r = vertices[caras[i]._2];
+  for (unsigned int i = 0; i < caras.size(); i++) {
+    auto a1=vertices[caras[i]._1]-vertices[caras[i]._0];
+    auto a2=vertices[caras[i]._2]-vertices[caras[i]._0];
+    auto n=a1.cross_product(a2);
 
-		_vertex3f a = q - p;
-		_vertex3f b = r - p;
+    float m=sqrt(n.x*n.x+n.y*n.y+n.z*n.z);
+    normales_caras[i] = _vertex3f(n.x/m, n.y/m, n.z/m);
+  }
 
-		normales_caras.push_back(a.cross_product(b).normalize());
-	}
+  b_normales_caras = true;
 }

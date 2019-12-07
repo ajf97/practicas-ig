@@ -7,6 +7,7 @@
 #include "vertex.h"
 #include <stdlib.h>
 #include <GL/glut.h>
+#include <math.h>
 #include "file_ply_stl.hpp"
 
 using namespace std;
@@ -49,6 +50,8 @@ void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b
 
 void	calcular_normales_caras();
 void 	calcular_normales_vertices();
+
+//void setCoeficients(_vertex4f ambiente_difusa, _vertex4f especular, float brillo);
 
 vector<_vertex3i> caras;
 

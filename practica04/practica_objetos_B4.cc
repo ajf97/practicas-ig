@@ -37,8 +37,7 @@ _tanque tanque;
 _espantapajaros espanta;
 
 // _objeto_ply *ply1;
-
-
+bool iluminar = false;
 //**************************************************************************
 // 
 //***************************************************************************
@@ -62,7 +61,7 @@ glLoadIdentity();
 
 // formato(x_minimo,x_maximo, y_minimo, y_maximo,plano_delantero, plano_traser)
 //  plano_delantero>0  plano_trasero>PlanoDelantero)
-glFrustum(-Size_x,Size_x,-Size_y,Size_y,Front_plane,Back_plane);
+glFrustum(-Size_x, Size_x, -Size_y, Size_y, Front_plane, Back_plane);
 }
 
 //**************************************************************************
@@ -112,7 +111,6 @@ glEnd();
 
 void draw_objects()
 {
-
 switch (t_objeto){
 	case CUBO: cubo.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
 	case PIRAMIDE: piramide.draw(modo,1.0,0.0,0.0,0.0,1.0,0.0,2);break;
@@ -123,6 +121,22 @@ switch (t_objeto){
 	}
 }
 
+/*******************************************************************
+ * Luces
+ * ****************************************************************/
+
+void illumination(){
+        if(iluminar){
+                GLfloat posicion[4] 	= {0.0, 5.0, 10.0, 1.0},
+                        ambiente[4] 	= {0.2,0.2,0.2,1.0},
+                        intensidad[4] = {1.0,1.0,1.0,1.0};
+
+                glLightfv(GL_LIGHT2, GL_POSITION, posicion);
+                glLightfv(GL_LIGHT2, GL_AMBIENT, ambiente);
+                glLightfv(GL_LIGHT2, GL_DIFFUSE, intensidad);
+                glLightfv(GL_LIGHT2, GL_SPECULAR, intensidad);
+        }
+}
 
 //**************************************************************************
 //
@@ -131,6 +145,7 @@ switch (t_objeto){
 void draw(void)
 {
 
+illumination();
 espanta.animacion();
 clean_window();
 change_observer();
@@ -138,6 +153,7 @@ draw_axis();
 draw_objects();
 glutSwapBuffers();
 }
+
 
 
 
@@ -178,6 +194,8 @@ switch (toupper(Tecla1)){
 	case '2':modo=EDGES;break;
 	case '3':modo=SOLID;break;
 	case '4':modo=SOLID_CHESS;break;
+        case '5':modo=SOLID_ILLUMINATED_FLAT;break;
+        case '6':modo=SOLID_ILLUMINATED_GOURAUD;break;
         case 'P':t_objeto=PIRAMIDE;break;
         case 'C':t_objeto=CUBO;break;
         case 'O':t_objeto=OBJETO_PLY;break;	
@@ -185,6 +203,7 @@ switch (toupper(Tecla1)){
         case 'A':t_objeto=ARTICULADO;break;
         case 'E':t_objeto=ESPANTAPAJAROS;break;
         case 'M':espanta.animar = !espanta.animar;break;
+        case 'I': if(iluminar) iluminar=false; else iluminar=true;break;
 	}
 glutPostRedisplay();
 }
