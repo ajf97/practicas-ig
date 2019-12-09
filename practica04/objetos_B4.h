@@ -51,7 +51,7 @@ void 	draw(_modo modo, float r1, float g1, float b1, float r2, float g2, float b
 void	calcular_normales_caras();
 void 	calcular_normales_vertices();
 
-//void setCoeficients(_vertex4f ambiente_difusa, _vertex4f especular, float brillo);
+void set_materials(_vertex4f ambienteDifusa, _vertex4f Especular, float Brillo);
 
 vector<_vertex3i> caras;
 

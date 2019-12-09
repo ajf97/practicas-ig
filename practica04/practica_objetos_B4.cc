@@ -36,8 +36,15 @@ _rotacion rotacion;
 _tanque tanque;
 _espantapajaros espanta;
 
-// _objeto_ply *ply1;
+// Variables que se encargan de la gestión de las luces
+
+// Ponemos esta variable para mostrar el objeto sin ninguna iluminación al principio
+// Para iluminarlo tenemos que usar la tecla I 
 bool iluminar = false;
+
+GLfloat posicion[4] = {0.0, 4.5, 8.0, 1.0};
+GLfloat ambiente[4] = {0.15,0.15,0.15,1.0};
+GLfloat intensidad[4] = {1.0,1.0,1.0,1.0};
 //**************************************************************************
 // 
 //***************************************************************************
@@ -125,17 +132,50 @@ switch (t_objeto){
  * Luces
  * ****************************************************************/
 
+// La siguiente función define una fuente de luz.
+// Para ello usamos glLightfv, donde definimos la luza, el parámetro y el valor
+
+
 void illumination(){
         if(iluminar){
-                GLfloat posicion[4] 	= {0.0, 5.0, 10.0, 1.0},
-                        ambiente[4] 	= {0.2,0.2,0.2,1.0},
-                        intensidad[4] = {1.0,1.0,1.0,1.0};
-
                 glLightfv(GL_LIGHT2, GL_POSITION, posicion);
                 glLightfv(GL_LIGHT2, GL_AMBIENT, ambiente);
                 glLightfv(GL_LIGHT2, GL_DIFFUSE, intensidad);
                 glLightfv(GL_LIGHT2, GL_SPECULAR, intensidad);
         }
+}
+
+//  Función que cambia la posición del foco a lo largo del eje x.
+// Se mueve al pulsar la tecla k
+
+void cambiar_posicion(){
+        posicion[0] += 1;
+}
+
+// Función que va cambiando de materiales
+
+void cambiar_material(int material_id){
+        _vertex4f ambiente_difusa;     //coeficientes ambiente y difuso
+        _vertex4f especular;           //coeficiente especular
+        float brillo;                  //exponente del brillo 
+
+        if(material_id == 1) {
+		ambiente_difusa[0] = 0.192;ambiente_difusa[1] = 0.192;ambiente_difusa[2] = 0.192;ambiente_difusa[3] = 1.0;
+                especular[0] = 0.4;especular[1] = 0.4;especular[2] = 0.4;especular[3] = 1.0;
+		brillo = 100;
+        }
+        else if(material_id == 2) {
+                ambiente_difusa[0] = 0.24;ambiente_difusa[1] = 0.24;ambiente_difusa[2] = 0.24;ambiente_difusa[3] = 1.0;
+                especular[0] = 0.35;especular[1] = 0.35;especular[2] = 0.35;especular[3] = 1.0;
+		brillo = 75;
+        }
+        else{
+                ambiente_difusa[0] = 0.4;ambiente_difusa[1] = 0.4;ambiente_difusa[2] = 0.4;ambiente_difusa[3] = 1.0;
+                especular[0] = 0.4;especular[1] = 0.4;especular[2] = 0.4;especular[3] = 1.0;
+		brillo = 50;
+        }
+        
+        espanta.set_materials(ambiente_difusa, especular, brillo);
 }
 
 //**************************************************************************
@@ -203,7 +243,11 @@ switch (toupper(Tecla1)){
         case 'A':t_objeto=ARTICULADO;break;
         case 'E':t_objeto=ESPANTAPAJAROS;break;
         case 'M':espanta.animar = !espanta.animar;break;
-        case 'I': if(iluminar) iluminar=false; else iluminar=true;break;
+        case 'I': iluminar = !iluminar;break;
+        case 'G': cambiar_material(1);draw_objects();break;
+        case 'H': cambiar_material(2);draw_objects();break;
+        case 'J': cambiar_material(3);draw_objects();break;
+        case 'K': cambiar_posicion();break;
 	}
 glutPostRedisplay();
 }
@@ -355,7 +399,7 @@ glutInitWindowSize(Window_width,Window_high);
 
 // llamada para crear la ventana, indicando el titulo (no se visualiza hasta que se llama
 // al bucle de eventos)
-glutCreateWindow("PRACTICA - 2");
+glutCreateWindow("PRACTICA - 4");
 
 // asignación de la funcion llamada "dibujar" al evento de dibujo
 glutDisplayFunc(draw);
