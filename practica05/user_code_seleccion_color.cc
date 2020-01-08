@@ -358,46 +358,6 @@ void construir_esfera(int numero_rotaciones , solido *esfera) {
 		}
 	}
 
-	// // tapa inferior
-	// if (fabs(perfil[0].x) > 0.0)
-	// {
-	// 	vertice_aux.x=0;
-	// 	vertice_aux.y=perfil[1].y;
-	// 	vertice_aux.z=0;
-
-	// 	for (int i = 0; i < numero_rotaciones; i++)
-	// 	{
-	// 		cara_aux.x = i * num_aux;
-	// 		cara_aux.y = num_aux*numero_rotaciones - 1;
-	// 		cara_aux.z = ((i + 1) % numero_rotaciones) * num_aux;
-
-	// 		esfera->car[num_cara].ind_c[0]=cara_aux._0;
-	//       	esfera->car[num_cara].ind_c[1]=cara_aux._1;
-	//       	esfera->car[num_cara].ind_c[2]=cara_aux._2;
-	// 		num_cara++;
-	// 	}
-	// }
-
-	// // tapa superior
-	// if (fabs(perfil[num_aux - 1].x) > 0.0)
-	// {
-	// 	vertice_aux.x=0;
-	// 	vertice_aux.y=perfil[num_aux - 1].y;
-	// 	vertice_aux.z=0;
-		
-	// 	for (int i = 0; i < numero_rotaciones; i++)
-	// 	{
-	// 		cara_aux.x = (num_aux - 1) + i * num_aux;
-	// 		cara_aux.y = (num_aux*numero_rotaciones - 1);
-	// 		cara_aux.z = (num_aux - 1) + ((i + 1) % numero_rotaciones) * num_aux;
-
-	// 		esfera->car[num_cara].ind_c[0]=cara_aux._0;
-	//       	esfera->car[num_cara].ind_c[1]=cara_aux._1;
-	//       	esfera->car[num_cara].ind_c[2]=cara_aux._2;
-	// 		num_cara++;
-	// 	}
-	// }
-     
 }
 
 

@@ -28,7 +28,9 @@ int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=450,UI_window_height=4
 
 int estadoRaton[3], xc, yc, modo[5], cambio=0;
 
-solido *esfera1, *piramide1, *piramide2, *piramide3, *piramide4, *piramide5;
+solido *cabeza, *sombrero, *nariz, *ojo_derecho, *ojo_izquierdo;
+solido *tronco, *pierna_derecha, *pierna_izquierda, *pie_izquierdo, *pie_derecho;
+solido *brazo_derecho, *brazo_izquierdo, *mano_derecha, *mano_izquierda;
 
 int Ancho=450, Alto=450;
 float factor=1.0;
@@ -108,40 +110,143 @@ glEnd();
 
 void draw_objects()
 {
-  //espanta.draw(SOLID,0.2,0.2,0.7,0.3,0.6,0.3,2);
+
 //   glPushMatrix();
 //      glTranslatef(0.0,-0.4,0.0);
 //      glPushMatrix(); 
 //      glTranslatef(0.0,0.8,0.0);
-     draw_solido(esfera1,0.1,0.1,0.1,1);
+     // draw_solido(esfera1,0.1,0.1,0.1,1);
      // draw_puntos(esfera1->ver,esfera1->n_v);
-     draw_solido(esfera1,esfera1->r,esfera1->g,esfera1->b,2);
+     // draw_solido(esfera1,esfera1->r,esfera1->g,esfera1->b,2);
      // glPopMatrix();         
 
-    //  glPushMatrix(); 
-    //  glTranslatef(-0.5,0.0,0.5);
-    //  draw_solido(piramide2,0.2,0.2,0.4,1);
-    //  draw_solido(piramide2,piramide2->r,piramide2->g,piramide2->b,2);
-    //  glPopMatrix(); 
-     
-    //  glPushMatrix(); 
-    //  glTranslatef(0.5,0.0,0.5);
-    //  draw_solido(piramide3,0.2,0.2,0.7,1);
-    //  draw_solido(piramide3,piramide3->r,piramide3->g,piramide3->b,2);
-    //  glPopMatrix();
+   // Cabeza
+	glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	//Dibujar cabeza
+	glScalef(0.3, 0.3, 0.3);
+	glTranslatef(0, 8.0, 0);
+     draw_solido(cabeza,0.9,0.6,0.2,1);
+     draw_solido(cabeza,cabeza->r,cabeza->g,cabeza->b,2);
 
-    //  glPushMatrix(); 
-    //  glTranslatef(-0.5,0.0,-0.5);
-    //  draw_solido(piramide4,0.2,0.2,1.0,1);
-    //  draw_solido(piramide4,piramide4->r,piramide4->g,piramide4->b,2);
-    //  glPopMatrix(); 
+	//Dibujar sombrero
+	glScalef(0.8, 0.8, 0.8);
+	glTranslatef(0, 1.5, 0);
+     draw_solido(sombrero,0.1,0.1,0.1,1);
+     draw_solido(sombrero,sombrero->r,sombrero->g,sombrero->b,2);
 
-    //  glPushMatrix(); 
-    //  glTranslatef(0.5,0.0,-0.5);
-    //  draw_solido(piramide5,1.0,0.2,0.0,1);
-    //  draw_solido(piramide5,piramide5->r,piramide5->g,piramide5->b,2);
-    //  glPopMatrix(); 
-//    glPopMatrix();   
+	//Dibujar nariz
+	glPushMatrix();
+	glScalef(0.3, 0.3, 0.3);
+	glTranslatef(0.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_solido(nariz,0.1,0.1,0.1,1);
+     draw_solido(nariz,nariz->r,nariz->g,nariz->b,2);
+	glPopMatrix();
+
+	//Dibujar ojos
+	glPushMatrix();
+	glScalef(0.2, 0.2, 0.2);
+	glTranslatef(-2.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_solido(ojo_derecho,0.1,0.1,0.1,1);
+     draw_solido(ojo_derecho,ojo_derecho->r,ojo_derecho->g,ojo_derecho->b,2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(0.2, 0.2, 0.2);
+	glTranslatef(2.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_solido(ojo_izquierdo,0.1,0.1,0.1,1);
+     draw_solido(ojo_izquierdo,ojo_izquierdo->r,ojo_izquierdo->g,ojo_izquierdo->b,2);
+	glPopMatrix();
+	glPopMatrix();
+
+	// // Tronco
+	glPushMatrix();
+	glScalef(0.27, 1.25, 0.27);
+	glTranslatef(0.0, 1.0, 0.0);
+	draw_solido(tronco,0.1,0.1,0.1,1);
+     draw_solido(tronco,tronco->r,tronco->g,tronco->b,2);
+	glPopMatrix();
+
+	// // Pierna derecha
+	glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	glTranslatef(-0.65, -0.2, 0.0);
+	glRotatef(-45.0, 0, 0, 1);
+	glPushMatrix();
+	glScalef(0.27, 1.0, 0.27);
+	draw_solido(pierna_derecha,0.1,0.1,0.1,1);
+     draw_solido(pierna_derecha,pierna_derecha->r,pierna_derecha->g,pierna_derecha->b,2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(0.08, 1.0, 0.08);
+     glTranslatef(0.0, -1.0, 0.0);
+	draw_solido(pie_derecho,0.1,0.1,0.1,1);
+     draw_solido(pie_derecho,pie_derecho->r,pie_derecho->g,pie_derecho->b,2);
+	glPopMatrix();
+	glPopMatrix();
+
+	// // Pierna izquierda
+	glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	glTranslatef(0.65, -0.2, 0.0);
+	glRotatef(45.0, 0, 0, 1);
+	glPushMatrix();
+	glScalef(0.27, 1.0, 0.27);
+	draw_solido(pierna_izquierda,0.1,0.1,0.1,1);
+     draw_solido(pierna_izquierda,pierna_izquierda->r,pierna_izquierda->g,pierna_izquierda->b,2);
+	glPopMatrix();
+
+	glPushMatrix();
+	glScalef(0.08, 1.0, 0.08);
+     glTranslatef(0.0, -1.0, 0.0);
+	draw_solido(pie_izquierdo,0.1,0.1,0.1,1);
+     draw_solido(pie_izquierdo,pie_izquierdo->r,pie_izquierdo->g,pie_izquierdo->b,2);
+	glPopMatrix();
+	glPopMatrix();
+
+	// // Brazo derecho
+	glPushMatrix();
+	glRotatef(0.0, 0, 0, 1);
+	glTranslatef(-0.5, 1.5, 0.0);
+	glRotatef(90.0, 0, 0, 1);
+	// Brazo
+	glPushMatrix();
+	glScalef(0.2, 0.5, 0.2);
+	draw_solido(brazo_derecho,0.1,0.1,0.1,1);
+     draw_solido(brazo_derecho,brazo_derecho->r,brazo_derecho->g,brazo_derecho->b,2);
+	glPopMatrix();
+	// Mano
+	glPushMatrix();
+	glScalef(0.08, 0.5, 0.08);
+     glTranslatef(0, 1, 0);
+	draw_solido(mano_derecha,0.1,0.1,0.1,1);
+     draw_solido(mano_derecha,mano_derecha->r,mano_derecha->g,mano_derecha->b,2);
+	glPopMatrix();
+	glPopMatrix();
+
+	// // Brazo izquierdo
+	glPushMatrix();
+	glRotatef(0.0, 0, 0, 1);
+	glTranslatef(0.5, 1.5, 0.0);
+	glRotatef(90.0, 0, 0, 1);
+	// Brazo
+	glPushMatrix();
+	glScalef(0.2, 0.5, 0.2);
+	draw_solido(brazo_izquierdo,0.1,0.1,0.1,1);
+     draw_solido(brazo_izquierdo,brazo_izquierdo->r,brazo_izquierdo->g,brazo_izquierdo->b,2);
+	glPopMatrix();
+	// Mano
+	glPushMatrix();
+	glScalef(0.08, 0.5, 0.08);
+     glTranslatef(0, -1, 0); //Mano izquierda
+	draw_solido(mano_izquierda,0.1,0.1,0.1,1);
+     draw_solido(mano_izquierda,mano_izquierda->r,mano_izquierda->g,mano_izquierda->b,2);
+	glPopMatrix();
+	glPopMatrix(); 
 }
 
 //**************************************************************************
@@ -151,37 +256,37 @@ void draw_objects()
 
 void draw_objects_seleccion()
 {
-int inc=20;
-   glPushMatrix();    
-     glTranslatef(0.0,-0.4,0.0);
-     glPushMatrix(); 
-     glTranslatef(0.0,0.8,0.0);
-     draw_seleccion_color(piramide1,100,100,100);
-     glPopMatrix();         
+// int inc=20;
+//    glPushMatrix();    
+//      glTranslatef(0.0,-0.4,0.0);
+//      glPushMatrix(); 
+//      glTranslatef(0.0,0.8,0.0);
+//      draw_seleccion_color(piramide1,100,100,100);
+//      glPopMatrix();         
 
-     glPushMatrix(); 
-     glTranslatef(-0.5,0.0,0.5);
-     draw_seleccion_color(piramide2,100+inc,100+inc,100+inc);
-     glPopMatrix(); 
-     inc+=20;
+//      glPushMatrix(); 
+//      glTranslatef(-0.5,0.0,0.5);
+//      draw_seleccion_color(piramide2,100+inc,100+inc,100+inc);
+//      glPopMatrix(); 
+//      inc+=20;
      
-     glPushMatrix(); 
-     glTranslatef(0.5,0.0,0.5);
-     draw_seleccion_color(piramide3,100+inc,100+inc,100+inc);
-     glPopMatrix();
-     inc+=20;  
+//      glPushMatrix(); 
+//      glTranslatef(0.5,0.0,0.5);
+//      draw_seleccion_color(piramide3,100+inc,100+inc,100+inc);
+//      glPopMatrix();
+//      inc+=20;  
 
-     glPushMatrix(); 
-     glTranslatef(-0.5,0.0,-0.5);
-     draw_seleccion_color(piramide4,100+inc,100+inc,100+inc);
-     glPopMatrix(); 
-     inc+=20;
+//      glPushMatrix(); 
+//      glTranslatef(-0.5,0.0,-0.5);
+//      draw_seleccion_color(piramide4,100+inc,100+inc,100+inc);
+//      glPopMatrix(); 
+//      inc+=20;
 
-     glPushMatrix(); 
-     glTranslatef(0.5,0.0,-0.5);
-     draw_seleccion_color(piramide5,100+inc,100+inc,100+inc);
-     glPopMatrix(); 
-   glPopMatrix();   
+//      glPushMatrix(); 
+//      glTranslatef(0.5,0.0,-0.5);
+//      draw_seleccion_color(piramide5,100+inc,100+inc,100+inc);
+//      glPopMatrix(); 
+//    glPopMatrix();   
 }
 
 
@@ -350,74 +455,74 @@ if(estadoRaton[2]==1)
 
 void procesar_color(unsigned char color[3])
 {
- int i;
- solido *obj;
+//  int i;
+//  solido *obj;
 
- obj=(solido *)malloc(sizeof(solido));
+//  obj=(solido *)malloc(sizeof(solido));
  
- switch (color[0])
-      {case 100: obj=piramide1;
-                 if (modo[0]==0) 
-                      {modo[0]=1;
-                       cambio=1;
-                      }
-                  else 
-                      {modo[0]=0;
-                       cambio=0;
-                      }
-                  break; 
-        case 120: obj=piramide2;
-                  if (modo[1]==0) 
-                       {modo[1]=1;
-                        cambio=1;
-                       }
-                  else 
-                       {modo[1]=0;
-                        cambio=0;
-                       } 
-                  break;
-        case 140: obj=piramide3;
-                  if (modo[2]==0) 
-                       {modo[2]=1;
-                        cambio=1;
-                       }
-                  else 
-                       {modo[2]=0;
-                        cambio=0;
-                       }
-                  break; 
-        case 160: obj=piramide4;
-                  if (modo[3]==0) 
-                       {modo[3]=1;
-                        cambio=1;
-                       }
-                  else 
-                       {modo[3]=0;
-                        cambio=0;
-                       }
-                  break;
-        case 180: obj=piramide5;
-                  if (modo[4]==0) 
-                       {modo[4]=1;
-                        cambio=1;
-                       }
-                  else 
-                       {modo[4]=0;
-                        cambio=0;
-                       }
-                  break;
-                }         
+//  switch (color[0])
+//       {case 100: obj=piramide1;
+//                  if (modo[0]==0) 
+//                       {modo[0]=1;
+//                        cambio=1;
+//                       }
+//                   else 
+//                       {modo[0]=0;
+//                        cambio=0;
+//                       }
+//                   break; 
+//         case 120: obj=piramide2;
+//                   if (modo[1]==0) 
+//                        {modo[1]=1;
+//                         cambio=1;
+//                        }
+//                   else 
+//                        {modo[1]=0;
+//                         cambio=0;
+//                        } 
+//                   break;
+//         case 140: obj=piramide3;
+//                   if (modo[2]==0) 
+//                        {modo[2]=1;
+//                         cambio=1;
+//                        }
+//                   else 
+//                        {modo[2]=0;
+//                         cambio=0;
+//                        }
+//                   break; 
+//         case 160: obj=piramide4;
+//                   if (modo[3]==0) 
+//                        {modo[3]=1;
+//                         cambio=1;
+//                        }
+//                   else 
+//                        {modo[3]=0;
+//                         cambio=0;
+//                        }
+//                   break;
+//         case 180: obj=piramide5;
+//                   if (modo[4]==0) 
+//                        {modo[4]=1;
+//                         cambio=1;
+//                        }
+//                   else 
+//                        {modo[4]=0;
+//                         cambio=0;
+//                        }
+//                   break;
+//                 }         
                
-        if (cambio==1) 
-                  {obj->r=0.3;
-                   obj->g=0.9;
-                   obj->b=0.3;
-                  }
-        if (cambio==0)
-                  {obj->r=0.9;
-                   obj->g=0.6;
-                   obj->b=0.2;
-                  }
+//         if (cambio==1) 
+//                   {obj->r=0.3;
+//                    obj->g=0.9;
+//                    obj->b=0.3;
+//                   }
+//         if (cambio==0)
+//                   {obj->r=0.9;
+//                    obj->g=0.6;
+//                    obj->b=0.2;
+//                   }
                  
  }
 
@@ -478,24 +583,48 @@ for (int i=0;i<5;i++) modo[i]=0;
 int main(int argc, char **argv)
 {
     // se llama a la inicialización de glut
-    esfera1=new solido[sizeof(solido)];
-    construir_esfera(20, esfera1);
-    
-    piramide1=(solido*)malloc(sizeof(solido));
-    construir_piramide(0.5,0.8,piramide1);
-    
-    piramide2=(solido*)malloc(sizeof(solido));
-    construir_piramide(0.5,0.8,piramide2);
-    
-    piramide3=(solido*)malloc(sizeof(solido));
-    construir_piramide(0.5,0.8,piramide3);
-    
-    piramide4=(solido*)malloc(sizeof(solido));
-    construir_piramide(0.5,0.8,piramide4);
-    
-    piramide5=(solido*)malloc(sizeof(solido));
-    construir_piramide(0.5,0.8,piramide5);
-    
+    cabeza=new solido[sizeof(solido)];
+    construir_esfera(20, cabeza);
+
+    sombrero=new solido[sizeof(solido)];
+    construir_cono(1.0,1.0,20,1,sombrero);
+
+    nariz=new solido[sizeof(solido)];
+    construir_cono(1.0,1.0,20,1,nariz);
+
+    ojo_derecho=new solido[sizeof(solido)];
+    construir_esfera(20, ojo_derecho);
+
+    ojo_izquierdo=new solido[sizeof(solido)];
+    construir_esfera(20, ojo_izquierdo);
+
+    tronco=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,tronco);
+
+    pierna_derecha=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,pierna_derecha);
+
+    pierna_izquierda=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,pierna_izquierda);
+
+    pie_izquierdo=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,pie_izquierdo);
+
+    pie_derecho=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,pie_derecho);
+
+    brazo_derecho=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,brazo_derecho);
+
+    brazo_izquierdo=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,brazo_izquierdo);
+
+    mano_derecha=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,mano_derecha);
+
+    mano_izquierda=new solido[sizeof(solido)];
+    construir_cilindro(1.0,1.0,20,3,mano_izquierda);
+
     glutInit(&argc, argv);
 
     // se indica las caracteristicas que se desean para la visualización con OpenGL
