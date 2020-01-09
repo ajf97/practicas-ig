@@ -26,7 +26,7 @@ GLfloat Window_width,Window_height,Front_plane,Back_plane;
 // variables que determninan la posicion y tamaño de la ventana X
 int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=450,UI_window_height=450;
 
-int estadoRaton[3], xc, yc, modo[7], cambio=0;
+int estadoRaton[3], xc, yc, modo[15], cambio=0;
 
 solido *cabeza, *sombrero, *nariz, *ojo_derecho, *ojo_izquierdo;
 solido *tronco, *pierna_derecha, *pierna_izquierda, *pie_izquierdo, *pie_derecho;
@@ -254,14 +254,14 @@ int inc=0;
 	glScalef(0.3, 0.3, 0.3);
 	glTranslatef(0, 8.0, 0);
      draw_seleccion_color(cabeza,100,100,100);
-     inc+=20;
+     inc+=10;
 
      //Dibujar sombrero
    
 	glScalef(0.8, 0.8, 0.8);
 	glTranslatef(0, 1.5, 0);
      draw_seleccion_color(sombrero,100+inc,100+inc,100+inc);
-     inc+=20;
+     inc+=10;
 
      //Dibujar nariz
 	glPushMatrix();
@@ -270,7 +270,7 @@ int inc=0;
 	glRotatef(90, 1, 0, 0);
      draw_seleccion_color(nariz,100+inc,100+inc,100+inc);
 	glPopMatrix();
-     inc+=20;
+     inc+=10;
 
      //Dibujar ojos
 	glPushMatrix();
@@ -279,7 +279,7 @@ int inc=0;
 	glRotatef(90, 1, 0, 0);
      draw_seleccion_color(ojo_derecho,100+inc,100+inc,100+inc);
 	glPopMatrix();
-     inc+=20;
+     inc+=10;
 
 	glPushMatrix();
 	glScalef(0.2, 0.2, 0.2);
@@ -288,7 +288,7 @@ int inc=0;
      draw_seleccion_color(ojo_izquierdo,100+inc,100+inc,100+inc);
 	glPopMatrix();
 	glPopMatrix();
-     inc+=20;
+     inc+=10;
 
      // // Tronco
 	glPushMatrix();
@@ -296,7 +296,7 @@ int inc=0;
 	glTranslatef(0.0, 1.0, 0.0);
 	draw_seleccion_color(tronco,100+inc,100+inc,100+inc);
 	glPopMatrix();
-     inc+=20;
+     inc+=10;
 
      // // Pierna derecha
 	glPushMatrix();
@@ -307,7 +307,7 @@ int inc=0;
 	glScalef(0.27, 1.0, 0.27);
 	draw_seleccion_color(pierna_derecha,100+inc,100+inc,100+inc);
 	glPopMatrix();
-     inc+=20;
+     inc+=10;
 
      glPushMatrix();
 	glScalef(0.08, 1.0, 0.08);
@@ -315,6 +315,65 @@ int inc=0;
 	draw_seleccion_color(pie_derecho,100+inc,100+inc,100+inc);
 	glPopMatrix();
 	glPopMatrix();
+     inc+=10;
+
+     // // Pierna izquierda
+	glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	glTranslatef(0.65, -0.2, 0.0);
+	glRotatef(45.0, 0, 0, 1);
+	glPushMatrix();
+	glScalef(0.27, 1.0, 0.27);
+	draw_seleccion_color(pierna_izquierda,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=10;
+
+	glPushMatrix();
+	glScalef(0.08, 1.0, 0.08);
+     glTranslatef(0.0, -1.0, 0.0);
+	draw_seleccion_color(pie_izquierdo,100+inc,100+inc,100+inc);
+	glPopMatrix();
+	glPopMatrix();
+     inc+=10;
+
+     // // Brazo derecho
+	glPushMatrix();
+	glRotatef(0.0, 0, 0, 1);
+	glTranslatef(-0.5, 1.5, 0.0);
+	glRotatef(90.0, 0, 0, 1);
+	// Brazo
+	glPushMatrix();
+	glScalef(0.2, 0.5, 0.2);
+	draw_seleccion_color(brazo_derecho,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=10;
+	// Mano
+	glPushMatrix();
+	glScalef(0.08, 0.5, 0.08);
+     glTranslatef(0, 1, 0);
+	draw_seleccion_color(mano_derecha,100+inc,100+inc,100+inc);
+	glPopMatrix();
+	glPopMatrix();
+     inc+=10;
+
+     // // Brazo izquierdo
+	glPushMatrix();
+	glRotatef(0.0, 0, 0, 1);
+	glTranslatef(0.5, 1.5, 0.0);
+	glRotatef(90.0, 0, 0, 1);
+	// Brazo
+	glPushMatrix();
+	glScalef(0.2, 0.5, 0.2);
+	draw_seleccion_color(brazo_izquierdo,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=10;
+	// Mano
+	glPushMatrix();
+	glScalef(0.08, 0.5, 0.08);
+     glTranslatef(0, -1, 0); //Mano izquierda
+	draw_seleccion_color(mano_izquierda,100+inc,100+inc,100+inc);
+	glPopMatrix();
+	glPopMatrix(); 
 
 
      glPopMatrix();
@@ -502,7 +561,7 @@ void procesar_color(unsigned char color[3])
                        cambio=0;
                       }
                   break; 
-        case 120: obj=sombrero;
+        case 110: obj=sombrero;
                   if (modo[1]==0) 
                        {modo[1]=1;
                         cambio=1;
@@ -512,7 +571,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        } 
                   break;
-        case 140: obj=nariz;
+        case 120: obj=nariz;
                   if (modo[2]==0) 
                        {modo[2]=1;
                         cambio=1;
@@ -522,7 +581,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break; 
-        case 160: obj=ojo_derecho;
+        case 130: obj=ojo_derecho;
                   if (modo[3]==0) 
                        {modo[3]=1;
                         cambio=1;
@@ -532,7 +591,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-        case 180: obj=ojo_izquierdo;
+        case 140: obj=ojo_izquierdo;
                   if (modo[4]==0) 
                        {modo[4]=1;
                         cambio=1;
@@ -542,7 +601,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 200: obj=tronco;
+          case 150: obj=tronco;
                   if (modo[5]==0) 
                        {modo[5]=1;
                         cambio=1;
@@ -552,7 +611,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 220: obj=pierna_derecha;
+          case 160: obj=pierna_derecha;
                   if (modo[6]==0) 
                        {modo[6]=1;
                         cambio=1;
@@ -562,13 +621,73 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 240: obj=pie_derecho;
+          case 170: obj=pie_derecho;
                   if (modo[7]==0) 
                        {modo[7]=1;
                         cambio=1;
                        }
                   else 
                        {modo[7]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 180: obj=pierna_izquierda;
+                  if (modo[8]==0) 
+                       {modo[8]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[8]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 190: obj=pie_izquierdo;
+                  if (modo[9]==0) 
+                       {modo[9]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[9]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 200: obj=brazo_derecho;
+                  if (modo[10]==0) 
+                       {modo[10]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[10]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 210: obj=mano_derecha;
+                  if (modo[11]==0) 
+                       {modo[11]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[11]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 220: obj=brazo_izquierdo;
+                  if (modo[12]==0) 
+                       {modo[12]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[12]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 230: obj=mano_izquierda;
+                  if (modo[13]==0) 
+                       {modo[13]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[13]=0;
                         cambio=0;
                        }
                   break;
@@ -630,7 +749,7 @@ glEnable(GL_DEPTH_TEST);
 change_projection();
 glViewport(0,0,UI_window_width,UI_window_height);
 
-for (int i=0;i<7;i++) modo[i]=0;
+for (int i=0;i<15;i++) modo[i]=0;
 }
 
 
