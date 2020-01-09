@@ -26,7 +26,7 @@ GLfloat Window_width,Window_height,Front_plane,Back_plane;
 // variables que determninan la posicion y tamaño de la ventana X
 int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=450,UI_window_height=450;
 
-int estadoRaton[3], xc, yc, modo[5], cambio=0;
+int estadoRaton[3], xc, yc, modo[7], cambio=0;
 
 solido *cabeza, *sombrero, *nariz, *ojo_derecho, *ojo_izquierdo;
 solido *tronco, *pierna_derecha, *pierna_izquierda, *pie_izquierdo, *pie_derecho;
@@ -110,16 +110,6 @@ glEnd();
 
 void draw_objects()
 {
-
-//   glPushMatrix();
-//      glTranslatef(0.0,-0.4,0.0);
-//      glPushMatrix(); 
-//      glTranslatef(0.0,0.8,0.0);
-     // draw_solido(esfera1,0.1,0.1,0.1,1);
-     // draw_puntos(esfera1->ver,esfera1->n_v);
-     // draw_solido(esfera1,esfera1->r,esfera1->g,esfera1->b,2);
-     // glPopMatrix();         
-
    // Cabeza
 	glPushMatrix();
 	glRotatef(0.0, 0, 1, 0);
@@ -256,37 +246,78 @@ void draw_objects()
 
 void draw_objects_seleccion()
 {
-// int inc=20;
-//    glPushMatrix();    
-//      glTranslatef(0.0,-0.4,0.0);
-//      glPushMatrix(); 
-//      glTranslatef(0.0,0.8,0.0);
-//      draw_seleccion_color(piramide1,100,100,100);
-//      glPopMatrix();         
-
-//      glPushMatrix(); 
-//      glTranslatef(-0.5,0.0,0.5);
-//      draw_seleccion_color(piramide2,100+inc,100+inc,100+inc);
-//      glPopMatrix(); 
-//      inc+=20;
+int inc=0;
      
-//      glPushMatrix(); 
-//      glTranslatef(0.5,0.0,0.5);
-//      draw_seleccion_color(piramide3,100+inc,100+inc,100+inc);
-//      glPopMatrix();
-//      inc+=20;  
+     glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	//Dibujar cabeza
+	glScalef(0.3, 0.3, 0.3);
+	glTranslatef(0, 8.0, 0);
+     draw_seleccion_color(cabeza,100,100,100);
+     inc+=20;
 
-//      glPushMatrix(); 
-//      glTranslatef(-0.5,0.0,-0.5);
-//      draw_seleccion_color(piramide4,100+inc,100+inc,100+inc);
-//      glPopMatrix(); 
-//      inc+=20;
+     //Dibujar sombrero
+   
+	glScalef(0.8, 0.8, 0.8);
+	glTranslatef(0, 1.5, 0);
+     draw_seleccion_color(sombrero,100+inc,100+inc,100+inc);
+     inc+=20;
 
-//      glPushMatrix(); 
-//      glTranslatef(0.5,0.0,-0.5);
-//      draw_seleccion_color(piramide5,100+inc,100+inc,100+inc);
-//      glPopMatrix(); 
-//    glPopMatrix();   
+     //Dibujar nariz
+	glPushMatrix();
+	glScalef(0.3, 0.3, 0.3);
+	glTranslatef(0.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_seleccion_color(nariz,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=20;
+
+     //Dibujar ojos
+	glPushMatrix();
+	glScalef(0.2, 0.2, 0.2);
+	glTranslatef(-2.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_seleccion_color(ojo_derecho,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=20;
+
+	glPushMatrix();
+	glScalef(0.2, 0.2, 0.2);
+	glTranslatef(2.0, -4, 4.7);
+	glRotatef(90, 1, 0, 0);
+     draw_seleccion_color(ojo_izquierdo,100+inc,100+inc,100+inc);
+	glPopMatrix();
+	glPopMatrix();
+     inc+=20;
+
+     // // Tronco
+	glPushMatrix();
+	glScalef(0.27, 1.25, 0.27);
+	glTranslatef(0.0, 1.0, 0.0);
+	draw_seleccion_color(tronco,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=20;
+
+     // // Pierna derecha
+	glPushMatrix();
+	glRotatef(0.0, 0, 1, 0);
+	glTranslatef(-0.65, -0.2, 0.0);
+	glRotatef(-45.0, 0, 0, 1);
+	glPushMatrix();
+	glScalef(0.27, 1.0, 0.27);
+	draw_seleccion_color(pierna_derecha,100+inc,100+inc,100+inc);
+	glPopMatrix();
+     inc+=20;
+
+     glPushMatrix();
+	glScalef(0.08, 1.0, 0.08);
+     glTranslatef(0.0, -1.0, 0.0);
+	draw_seleccion_color(pie_derecho,100+inc,100+inc,100+inc);
+	glPopMatrix();
+	glPopMatrix();
+
+
+     glPopMatrix();
 }
 
 
@@ -455,74 +486,104 @@ if(estadoRaton[2]==1)
 
 void procesar_color(unsigned char color[3])
 {
-//  int i;
-//  solido *obj;
+ int i;
+ solido *obj;
 
-//  obj=(solido *)malloc(sizeof(solido));
+ obj=(solido *)malloc(sizeof(solido));
  
-//  switch (color[0])
-//       {case 100: obj=piramide1;
-//                  if (modo[0]==0) 
-//                       {modo[0]=1;
-//                        cambio=1;
-//                       }
-//                   else 
-//                       {modo[0]=0;
-//                        cambio=0;
-//                       }
-//                   break; 
-//         case 120: obj=piramide2;
-//                   if (modo[1]==0) 
-//                        {modo[1]=1;
-//                         cambio=1;
-//                        }
-//                   else 
-//                        {modo[1]=0;
-//                         cambio=0;
-//                        } 
-//                   break;
-//         case 140: obj=piramide3;
-//                   if (modo[2]==0) 
-//                        {modo[2]=1;
-//                         cambio=1;
-//                        }
-//                   else 
-//                        {modo[2]=0;
-//                         cambio=0;
-//                        }
-//                   break; 
-//         case 160: obj=piramide4;
-//                   if (modo[3]==0) 
-//                        {modo[3]=1;
-//                         cambio=1;
-//                        }
-//                   else 
-//                        {modo[3]=0;
-//                         cambio=0;
-//                        }
-//                   break;
-//         case 180: obj=piramide5;
-//                   if (modo[4]==0) 
-//                        {modo[4]=1;
-//                         cambio=1;
-//                        }
-//                   else 
-//                        {modo[4]=0;
-//                         cambio=0;
-//                        }
-//                   break;
-//                 }         
+ switch (color[0])
+      {case 100: obj=cabeza;
+                 if (modo[0]==0) 
+                      {modo[0]=1;
+                       cambio=1;
+                      }
+                  else 
+                      {modo[0]=0;
+                       cambio=0;
+                      }
+                  break; 
+        case 120: obj=sombrero;
+                  if (modo[1]==0) 
+                       {modo[1]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[1]=0;
+                        cambio=0;
+                       } 
+                  break;
+        case 140: obj=nariz;
+                  if (modo[2]==0) 
+                       {modo[2]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[2]=0;
+                        cambio=0;
+                       }
+                  break; 
+        case 160: obj=ojo_derecho;
+                  if (modo[3]==0) 
+                       {modo[3]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[3]=0;
+                        cambio=0;
+                       }
+                  break;
+        case 180: obj=ojo_izquierdo;
+                  if (modo[4]==0) 
+                       {modo[4]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[4]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 200: obj=tronco;
+                  if (modo[5]==0) 
+                       {modo[5]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[5]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 220: obj=pierna_derecha;
+                  if (modo[6]==0) 
+                       {modo[6]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[6]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 240: obj=pie_derecho;
+                  if (modo[7]==0) 
+                       {modo[7]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[7]=0;
+                        cambio=0;
+                       }
+                  break;
+     }         
                
-//         if (cambio==1) 
-//                   {obj->r=0.3;
-//                    obj->g=0.9;
-//                    obj->b=0.3;
-//                   }
-//         if (cambio==0)
-//                   {obj->r=0.9;
-//                    obj->g=0.6;
-//                    obj->b=0.2;
-//                   }
+        if (cambio==1) 
+                  {obj->r=0.3;
+                   obj->g=0.9;
+                   obj->b=0.3;
+                  }
+        if (cambio==0)
+                  {obj->r=0.9;
+                   obj->g=0.6;
+                   obj->b=0.2;
+                  }
                  
  }
 
@@ -569,7 +630,7 @@ glEnable(GL_DEPTH_TEST);
 change_projection();
 glViewport(0,0,UI_window_width,UI_window_height);
 
-for (int i=0;i<5;i++) modo[i]=0;
+for (int i=0;i<7;i++) modo[i]=0;
 }
 
 
