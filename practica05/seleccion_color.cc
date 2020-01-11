@@ -32,6 +32,7 @@ solido *cabeza, *sombrero, *nariz, *ojo_derecho, *ojo_izquierdo;
 solido *tronco, *pierna_derecha, *pierna_izquierda, *pie_izquierdo, *pie_derecho;
 solido *brazo_derecho, *brazo_izquierdo, *mano_derecha, *mano_izquierda;
 
+bool planta = false;
 int Ancho=450, Alto=450;
 float factor=1.0;
 
@@ -386,19 +387,44 @@ int inc=0;
 
 void draw_scene(void)
 {
-glDrawBuffer(GL_FRONT);
-clear_window();
-change_observer();
-draw_axis();
-draw_objects();
+
+if(planta==true ){
+     clear_window();
+     glMatrixMode(GL_PROJECTION);
+     glLoadIdentity();
+     glOrtho(Observer_distance*-1.0, Observer_distance*1.0, Observer_distance*-1.0, Observer_distance*1.0,-100.0,100.0);
+     glViewport(0,0,Ancho,Alto);
+     glRotatef(90,1,0,0);
+     glScalef(factor,factor,1.0);
+     glMatrixMode(GL_MODELVIEW);
+     glLoadIdentity();
+     draw_axis();
+     draw_objects();
+
+     glFlush();
+     
+}
+else {
+     
+     clear_window();
+     clear_window();
+     clear_window();
+     change_observer();
+     draw_axis();
+     draw_objects();
 
 
-glDrawBuffer(GL_BACK);
-clear_window();
-change_observer();
-draw_objects_seleccion();
+     glDrawBuffer(GL_BACK);
+     clear_window();
+     change_observer();
+     draw_objects_seleccion();
+     glDrawBuffer(GL_FRONT);
 
-glFlush();
+     glFlush();
+
+     
+}
+
 }
 
 
@@ -461,6 +487,8 @@ switch (Tecla1){
 	case GLUT_KEY_DOWN:Observer_angle_x++;break;
 	case GLUT_KEY_PAGE_UP:Observer_distance*=1.2;break;
 	case GLUT_KEY_PAGE_DOWN:Observer_distance/=1.2;break;
+     case GLUT_KEY_F1:planta=true;break;
+     case GLUT_KEY_F2:planta=false;break;
 	}
 glutPostRedisplay();
 }
@@ -490,6 +518,7 @@ if(boton== GLUT_LEFT_BUTTON) {
   }
 
  // Hacer zoom con la rueda del ratón
+ if(!planta){
   if(boton == 3 || boton == 4){
     if(estado == GLUT_DOWN){
       if(boton == 3)
@@ -501,6 +530,7 @@ if(boton== GLUT_LEFT_BUTTON) {
       glutPostRedisplay();
     }
   }
+ }
 }
 
 /*************************************************************************/
@@ -767,7 +797,7 @@ int main(int argc, char **argv)
     construir_esfera(20, cabeza);
 
     sombrero=new solido[sizeof(solido)];
-    construir_cono(1.0,1.0,20,1,sombrero);
+    construir_cono(1.0,1.0,8,1,sombrero);
 
     nariz=new solido[sizeof(solido)];
     construir_cono(1.0,1.0,20,1,nariz);
