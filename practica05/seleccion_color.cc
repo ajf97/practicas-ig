@@ -26,7 +26,7 @@ GLfloat Window_width,Window_height,Front_plane,Back_plane;
 // variables que determninan la posicion y tamaño de la ventana X
 int UI_window_pos_x=50,UI_window_pos_y=50,UI_window_width=450,UI_window_height=450;
 
-int estadoRaton[3], xc, yc, modo[15], cambio=0;
+int estadoRaton[3], xc, yc, modo[21], cambio=0;
 
 solido *cabeza, *sombrero, *nariz, *ojo_derecho, *ojo_izquierdo;
 solido *tronco, *pierna_derecha, *pierna_izquierda, *pie_izquierdo, *pie_derecho;
@@ -35,6 +35,7 @@ solido *brazo_derecho, *brazo_izquierdo, *mano_derecha, *mano_izquierda;
 bool planta = false;
 int Ancho=450, Alto=450;
 float factor=1.0;
+int numero_cara;
 
 void pick_color(int x, int y);
 
@@ -122,9 +123,13 @@ void draw_objects()
 
 	//Dibujar sombrero
 	glScalef(0.8, 0.8, 0.8);
-	glTranslatef(0, 1.5, 0);
+	glTranslatef(0, 1.2, 0);
+
+     draw_cara(sombrero,sombrero->r,sombrero->g,sombrero->b,numero_cara);
+   
      draw_solido(sombrero,0.1,0.1,0.1,1);
-     draw_solido(sombrero,sombrero->r,sombrero->g,sombrero->b,2);
+     draw_solido(sombrero,0.9,0.6,0.2,2);
+
 
 	//Dibujar nariz
 	glPushMatrix();
@@ -261,7 +266,8 @@ int inc=0;
    
 	glScalef(0.8, 0.8, 0.8);
 	glTranslatef(0, 1.5, 0);
-     draw_seleccion_color(sombrero,100+inc,100+inc,100+inc);
+     // draw_seleccion_color(sombrero,100+inc,100+inc,100+inc);
+     draw_seleccion_color_cara(sombrero,110, 110, 110, numero_cara);
      inc+=10;
 
      //Dibujar nariz
@@ -577,6 +583,7 @@ void procesar_color(unsigned char color[3])
 {
  int i;
  solido *obj;
+ numero_cara=0;
 
  obj=(solido *)malloc(sizeof(solido));
  
@@ -591,7 +598,9 @@ void procesar_color(unsigned char color[3])
                        cambio=0;
                       }
                   break; 
-        case 110: obj=sombrero;
+        case 110:
+                  obj=sombrero;
+                  numero_cara=0;
                   if (modo[1]==0) 
                        {modo[1]=1;
                         cambio=1;
@@ -599,9 +608,11 @@ void procesar_color(unsigned char color[3])
                   else 
                        {modo[1]=0;
                         cambio=0;
-                       } 
+                       }
                   break;
-        case 120: obj=nariz;
+          case 111:
+                    obj=sombrero;
+                  numero_cara=1;
                   if (modo[2]==0) 
                        {modo[2]=1;
                         cambio=1;
@@ -610,8 +621,10 @@ void procesar_color(unsigned char color[3])
                        {modo[2]=0;
                         cambio=0;
                        }
-                  break; 
-        case 130: obj=ojo_derecho;
+                  break;
+          case 112:
+                    obj=sombrero;
+                  numero_cara=2;
                   if (modo[3]==0) 
                        {modo[3]=1;
                         cambio=1;
@@ -621,7 +634,9 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-        case 140: obj=ojo_izquierdo;
+          case 113:
+                    obj=sombrero;
+                  numero_cara=3;
                   if (modo[4]==0) 
                        {modo[4]=1;
                         cambio=1;
@@ -631,7 +646,9 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 150: obj=tronco;
+          case 114:
+                    obj=sombrero;
+                  numero_cara=4;
                   if (modo[5]==0) 
                        {modo[5]=1;
                         cambio=1;
@@ -641,7 +658,9 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 160: obj=pierna_derecha;
+          case 115:
+                    obj=sombrero;
+                  numero_cara=5;
                   if (modo[6]==0) 
                        {modo[6]=1;
                         cambio=1;
@@ -651,7 +670,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 170: obj=pie_derecho;
+        case 120: obj=nariz;
                   if (modo[7]==0) 
                        {modo[7]=1;
                         cambio=1;
@@ -660,8 +679,8 @@ void procesar_color(unsigned char color[3])
                        {modo[7]=0;
                         cambio=0;
                        }
-                  break;
-          case 180: obj=pierna_izquierda;
+                  break; 
+        case 130: obj=ojo_derecho;
                   if (modo[8]==0) 
                        {modo[8]=1;
                         cambio=1;
@@ -671,7 +690,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 190: obj=pie_izquierdo;
+        case 140: obj=ojo_izquierdo;
                   if (modo[9]==0) 
                        {modo[9]=1;
                         cambio=1;
@@ -681,7 +700,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 200: obj=brazo_derecho;
+          case 150: obj=tronco;
                   if (modo[10]==0) 
                        {modo[10]=1;
                         cambio=1;
@@ -691,7 +710,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 210: obj=mano_derecha;
+          case 160: obj=pierna_derecha;
                   if (modo[11]==0) 
                        {modo[11]=1;
                         cambio=1;
@@ -701,7 +720,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 220: obj=brazo_izquierdo;
+          case 170: obj=pie_derecho;
                   if (modo[12]==0) 
                        {modo[12]=1;
                         cambio=1;
@@ -711,7 +730,7 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
-          case 230: obj=mano_izquierda;
+          case 180: obj=pierna_izquierda;
                   if (modo[13]==0) 
                        {modo[13]=1;
                         cambio=1;
@@ -721,6 +740,57 @@ void procesar_color(unsigned char color[3])
                         cambio=0;
                        }
                   break;
+          case 190: obj=pie_izquierdo;
+                  if (modo[14]==0) 
+                       {modo[14]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[14]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 200: obj=brazo_derecho;
+                  if (modo[15]==0) 
+                       {modo[15]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[15]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 210: obj=mano_derecha;
+                  if (modo[16]==0) 
+                       {modo[16]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[16]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 220: obj=brazo_izquierdo;
+                  if (modo[17]==0) 
+                       {modo[17]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[17]=0;
+                        cambio=0;
+                       }
+                  break;
+          case 230: obj=mano_izquierda;
+                  if (modo[18]==0) 
+                       {modo[18]=1;
+                        cambio=1;
+                       }
+                  else 
+                       {modo[18]=0;
+                        cambio=0;
+                       }
+                  break;
+          
      }         
                
         if (cambio==1) 
@@ -779,7 +849,7 @@ glEnable(GL_DEPTH_TEST);
 change_projection();
 glViewport(0,0,UI_window_width,UI_window_height);
 
-for (int i=0;i<15;i++) modo[i]=0;
+for (int i=0;i<21;i++) modo[i]=0;
 }
 
 
@@ -794,10 +864,10 @@ int main(int argc, char **argv)
 {
     // se llama a la inicialización de glut
     cabeza=new solido[sizeof(solido)];
-    construir_esfera(20, cabeza);
+    construir_esfera(15, cabeza);
 
     sombrero=new solido[sizeof(solido)];
-    construir_cono(1.0,1.0,8,1,sombrero);
+    construir_piramide(0.5,0.8,sombrero);
 
     nariz=new solido[sizeof(solido)];
     construir_cono(1.0,1.0,20,1,nariz);

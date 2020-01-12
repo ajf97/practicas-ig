@@ -94,7 +94,7 @@ void construir_cono(float r, float h, int n, int tapas, solido *cono) {
 
 	num_aux=perfil.size();	// número de vértices que tenemos en el perfil inicial
 	cono->n_v=num_aux*num+2;
-	cono->n_c=n*4;
+	cono->n_c=n*2;
 	cono->ver=new vertices[cono->n_v*sizeof(vertices)];
 	cono->car=new caras[cono->n_c*sizeof(caras)];
 	cono->r=0.9;cono->g=0.6;cono->b=0.2;
@@ -444,4 +444,43 @@ void draw_seleccion_color(solido *malla, int r, int g, int b)
         glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
     }
    glEnd();
+}
+
+
+void draw_cara(solido *malla, float r1, float g1, float b1, int numCara){
+
+  int n_v;
+
+  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+  glColor3f(r1,g1,b1);
+  glBegin(GL_TRIANGLES);
+	n_v=malla->car[numCara].ind_c[0];
+	glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+	n_v=malla->car[numCara].ind_c[1];
+	glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+	n_v=malla->car[numCara].ind_c[2];
+	glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+  glEnd();
+
+}
+
+void  draw_seleccion_color_cara(solido *malla ,float r1, float g1, float b1, int numCara){
+  
+  int n_c,n_v;
+  n_c=malla->n_c;
+  glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+  //cout<<"drawSelecCara El numero de cara es: "<< numCara <<" el color "<<r1+numCara<<endl;
+  for (int i=0;i<n_c;i++){
+    glBegin(GL_TRIANGLES);
+      glColor3ub(r1+numCara,g1,b1);
+	  	n_v=malla->car[i].ind_c[0];
+        glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+		n_v=malla->car[i].ind_c[1];
+        glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+		n_v=malla->car[i].ind_c[2];
+        glVertex3f(malla->ver[n_v].coord[0], malla->ver[n_v].coord[1], malla->ver[n_v].coord[2]);
+      	numCara++;
+    glEnd();
+  }
 }

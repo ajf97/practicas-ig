@@ -53,6 +53,9 @@ void construir_esfera(int numero_rotaciones, solido *esfera);
 void draw_puntos(vertices *ver, int n_v);
 void draw_solido(solido *malla, float r, float g, float b, int modo);
 void draw_solido_ajedrez(solido *malla, float r1, float g1, float b1, float r2, float g2, float b2);
+void draw_cara(solido *malla, float r1, float g1, float b1, int numCara);
+void draw_seleccion_color_cara(solido *malla, float r1, float g1, float b1, int numCara);
+
 
 // Función para pintar en el buffer y hacer la selección posteriormente
 void draw_seleccion_color(solido *malla, int r, int g, int b);
