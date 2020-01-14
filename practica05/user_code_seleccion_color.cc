@@ -470,7 +470,6 @@ void  draw_seleccion_color_cara(solido *malla ,float r1, float g1, float b1, int
   n_c=malla->n_c;
   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
-  //cout<<"drawSelecCara El numero de cara es: "<< numCara <<" el color "<<r1+numCara<<endl;
   for (int i=0;i<n_c;i++){
     glBegin(GL_TRIANGLES);
       glColor3ub(r1+numCara,g1,b1);
