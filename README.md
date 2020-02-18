@@ -29,3 +29,15 @@ c: Cubo
 r: Objeto pieza por revolución a partir de un perfil
 x: cilindro, siendo el eje de rotación x
 z: cilindro, siendo el eje de rotación z
+
+## Práctica 3: Modelos jerárquicos
+
+En esta práctica se construye un objeto jerárquico a partir de los modelos poligonales usados en la práctica anterior.
+
+## Práctica 4: Iluminación
+
+El objetivo de la práctica consiste en aplicar distintas luces al objeto creado anteriormente.
+
+## Práctica 5: Selección
+
+Por último, se implementa el zoom con el ratón, la selección por objetos y la selección por caras.
